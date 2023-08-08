@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="makeBattle.css" rel="stylesheet">
+    <script src="../changePage.js"></script>
+    <title>Do Battle</title>
+</head>
+<body>
+    <div id="make-top">
+        <div id="top-menubar">
+            <div id="menu">
+                <img src="../image/menu-yellow.svg" onclick = "changePage('../main/menubar.html')">
+            </div>
+            <div id="logo">
+                <img src="../image/logo-yellow.svg">
+            </div>
+            <div id="nothing"></div>
+        </div>
+        <div id="make-start"> 
+            <b>김배틀</b>님의 <br>
+            새로운 배틀을 시작합니다.
+        </div>
+    </div>
+
+    <div id="make-bottom">
+        <div id="fireImage">
+            <img src="../image/fire.svg">
+        </div>
+        <div id="getInform">
+            <input type="text" placeholder="배틀 이름" required  id="make-battle-name">
+            <select id="battle-categ">
+                <option disabled selected>배틀 카테고리</option>
+                <option>공부</option>
+                <option>운동</option>
+            </select>
+            <input type="date" placeholder="배틀 기간" id="battle-date">
+            <input type="submit" value="배틀 시작!" id="button" onclick = "changePage('battleMakeSuccess.html')">
+        </div>
+    </div>
+</body>
+</html>

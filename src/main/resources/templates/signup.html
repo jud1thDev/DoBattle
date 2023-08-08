@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="signup.css" rel="stylesheet">
+    <script src="../changePage.js"></script>
+    <title>Do battle</title>
+</head>
+<body>
+    <div id="signup-top">
+        <div id="menu">
+            <img src="../image/logo-orange.svg">
+        </div>
+    </div>
+
+    <div id="signup-bottom">
+        <div id="signup-write">회원가입</div>
+        <div id="getInform">
+            <input type="text" placeholder="사용 닉네임" required  id="battle-name">
+            <input type="text" placeholder="ID" required  id="battle-id">
+            <input type="password" placeholder="PW" required  id="battle-pw">
+            <input type="password" placeholder="PW 재확인" required  id="battle-pwre">
+            <div id="agree">
+                <label>두 배틀의 이용 약관에 동의합니다.</label>
+                <input type="checkbox" id="agreecheck" required>
+            </div>
+            <div id="agree">
+                <label>두 배틀의 개인정보 이용 방침에 동의합니다.</label>
+                <input type="checkbox" id="agreecheck" required>
+            </div>
+            <input type="submit" value="회원가입하기" id="button" onclick = "changePage('../main/main.html')">
+        </div>
+    </div>
+</body>
+</html>

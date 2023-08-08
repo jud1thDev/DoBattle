@@ -1,0 +1,29 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.14'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'DoBattle'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // DB접근기술인 JPA
+	runtimeOnly 'mysql:mysql-connector-java' // Mysql 데이터베이스 라이브러리 추가
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26' // Use the appropriate version
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

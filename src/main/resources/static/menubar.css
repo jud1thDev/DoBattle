@@ -1,0 +1,37 @@
+body{
+    background-color: #FFF7E8;
+    margin: 0px;
+}
+
+/*로고*/
+#logo-bar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 120px;   /*사이간격 조정필요*/
+}
+
+#menu{
+    padding: 70px 0px 0px 20px;
+}
+
+#logo{
+    padding: 50px 30px 0px 0px;
+}
+
+/*메뉴바*/
+#menu-bar > div {
+    padding-left: 60px;
+    margin-bottom: 55px;
+}
+
+#menu-bar > div > a{
+    text-decoration: none;
+    color:black; 
+    font-size: 18px;
+}
+
+#menu-bar > div:hover{
+    font-weight: bold;
+    border-left: 7px solid #FF5C00;
+    padding-left: 53px; /*선 굵기때문에 옆으로 밀려남. padding값 새로 조정*/
+}

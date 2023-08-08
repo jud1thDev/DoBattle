@@ -1,0 +1,70 @@
+body{
+    background-color: #FFF7E8;
+    margin: 0px;
+}
+
+/*상단바*/
+#main-top{
+    background-color: #FDD67C;
+    height: 150px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-bottom: 25px;
+}
+
+#top-menubar{
+    display: flex;
+    justify-content: space-between;
+}
+
+#menu{
+    padding: 70px 0px 0px 20px;
+}
+
+#top-write{
+    padding: 73px 0px 0px 0px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#nothing{
+    padding-right: 20px;
+    width: 32px;
+}
+
+/*하단바*/
+#main-bottom{
+    margin: 0px 30px;
+}
+
+#bottom-box{
+    background-color: #FF5C00;
+    color:white;
+    margin: 12px 0px;
+    height: 150px;
+    border-radius: 40px;
+    display:flex;
+    flex-direction : column;
+    justify-content: flex-start;
+    padding-left: 30px;
+}
+
+#battle-name{
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+#battle-date{
+    opacity: 70%;
+}
+
+#versus{
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px;
+    text-align: end;
+    padding-right: 30px;
+}
+

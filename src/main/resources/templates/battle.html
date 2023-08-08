@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="battle.css" rel="stylesheet">
+    <script src="../changePage.js"></script>
+    <title>Do battle</title>
+</head>
+<body>
+    <div id="real-top">
+        <div id="battle-top">
+            <div><img src="../image/arrow.svg" onclick = "changePage('doingBattleList.html')"></div>
+            <div id="write">배틀 상세보기</div>
+            <div id="nothing"></div>
+        </div>
+
+        <div id="battle-detail">
+            <div id="detail-text">
+                <span id="date">xx.xx~xx.xx<br></span>
+                <span id="name">배틀 이름</span>
+            </div>
+            <div><img src="../image/small-fire.svg"></div>
+        </div>
+
+        <div id="battle-progress">
+            <div id="me">
+                <div class="progress">
+                    <div class="first">60%</div>
+                    <!-- <img src="../image/progress-face.svg"> -->
+                    <div class="second"></div>
+                </div>
+                <p>김배틀</p>
+            </div>
+
+            <div id="vs">vs</div>
+
+            <div id="other">
+                <p>박상대</p>
+                <div class="progress">
+                    <div class="first">26%</div>
+                    <!-- <img src="../image/progress-face.svg"> -->
+                    <div class="second"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="text">김배틀님이 34% 차이로<br>앞서가고 있어요!</div>
+    </div>
+    
+    <div id="battle-bottom">
+        <div>
+            <div id="todo-main">TO-DO</div>
+            <div><img src="../image/todo-fire-make.svg"></div>
+        </div>
+
+        <div>
+            <div id="todo-list">오늘의 todo리스트입니다.</div>
+            <div><img src="../image/todo-fire.svg"></div>
+        </div>
+        <div>
+            <div id="todo-list">오늘의 todo리스트입니다.</div>
+            <div><img src="../image/todo-fire.svg"></div>
+        </div>
+        <div>
+            <div id="todo-list">오늘의 todo리스트입니다.</div>
+            <div><img src="../image/todo-fire.svg"></div>
+        </div>
+    </div>
+</body>
+</html>

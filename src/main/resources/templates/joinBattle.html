@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="joinBattle.css" rel="stylesheet">
+    <script src="../changePage.js"></script>
+    <title>Do battle</title>
+</head>
+<body>
+    <div id="join-top">
+        <div id="top-menubar">
+            <div id="menu">
+                <img src="../image/menu-yellow.svg" onclick = "changePage('../main/menubar.html')">
+            </div>
+            <div id="top-write">
+                배틀 참여하기
+            </div>
+            <div id="nothing"></div>
+        </div>
+    </div>
+
+    <div id="join-bottom">
+        <div id="text">
+            <span>김배틀</span>님!<br>
+            배틀에 초대받으셨나요?
+        </div>
+        <div>
+            <img src="../image/email.svg">
+        </div>
+        <div id="about-code">
+            <label for="code">초대코드를 입력하고<br>바로 배틀에 참여하세요!</label>
+            <input type="text" name="code" id="code" placeholder="코드를 입력하세요">
+        </div>
+    </div>
+
+    <div id="button">
+        <button onclick = "changePage('joinBattleSuccess.html')">배틀 참여하기!</button>
+    </div>
+</body>
+</html>

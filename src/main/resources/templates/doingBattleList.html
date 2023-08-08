@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="doingBattleList.css" rel="stylesheet">
+    <script src="../changePage.js"></script>
+    <title>Do Battle</title>
+</head>
+<body>
+    <div id="main-top">
+        <div id="top-menubar">
+            <div id="menu">
+                <img src="../image/menu-yellow.svg" onclick = "changePage('../main/menubar.html')">
+            </div>
+            <div id="top-write">
+                진행중인 배틀
+            </div>
+            <div id="nothing"></div>
+        </div>
+    </div>
+
+    <div id="main-bottom" onclick = "changePage('battle.html')">
+        <div id="example-1">
+            <div id="bottom-box">
+                <div id="battle-name">배틀이름</div>
+                <div id="battle-date">xx.xx~xx.xx</div>
+                <div id="versus">vs 상대이름</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
