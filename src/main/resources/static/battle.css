@@ -1,0 +1,170 @@
+body{
+    background-color:  #FDD67C;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0px;
+}
+
+#real-top{
+    background-color:  #FFF7E8;
+}
+
+/*상단바*/
+#battle-top{
+    display:flex;
+    justify-content: space-between;
+    padding: 50px 30px 0px 30px;
+}
+
+#write{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#nothing{
+    width: 40px;
+}
+
+/*배틀 날짜*/
+#battle-detail{
+    display:flex;
+    justify-content: space-between;
+    margin: 0px 30px;
+    padding-bottom: 20px;
+}
+
+#battle-detail > div:first-child{
+    display:flex;
+}
+#detail-text{
+    display:flex;
+    flex-direction : column;
+    justify-content: center;
+    z-index: 2;
+}
+
+#date{
+    font-size: 18px;
+    z-index: 2;
+}
+
+#name{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#battle-detail > div > div > img{
+    margin-left: -20px;
+    z-index: 1;
+}
+
+#battle-detail > div > img{
+    padding:15px 10px 0px 0px;
+}
+
+/*배틀 진행표*/
+#battle-progress{
+    margin: 0px 30px;
+    padding: 20px 0px;
+    border-top: 1px solid #FDD67C;
+    border-bottom: 1px solid #FDD67C;
+}
+
+.progress{
+    margin: 0px 10px;
+    background-color: white;
+    border: 3px solid #FF5C00;
+    height: 40px;
+    border-radius: 25px;
+    display:flex;
+}
+
+.first{
+    background-color: #FF5C00;
+    border-top-left-radius: 17px;
+    border-bottom-left-radius: 17px;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    padding: 5px;
+}
+#me .first{    /*성공 비율 변수로 받아서 퍼센트 고치기*/
+    width: calc((100vw - 90px)*0.60); /*꺅!!!!!!!이런기능있는거 이제알았음......신난다*/
+}
+#other .first{
+    width: calc((100vw - 90px)*0.26);
+}
+
+.progress > img{
+    height: 50px;
+    margin-left: -20px;
+    margin-top: -5px;   /*중앙으로 옮기기 위해*/
+}
+
+#battle-progress p {
+    font-size: 19px;
+}
+#me > p{
+    margin-left: 20px;
+    margin-top: 5px;
+}
+#other > p{
+    text-align: end;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+
+#vs{
+    text-align: center;
+    font-size: 35px;
+    margin: -40px;
+    font-weight: bold;
+}
+
+/*누가 앞서고 있는지 표시*/
+#text{
+    padding: 20px 30px 60px 30px;
+    font-size: 22px;
+}
+
+/*투두리스트*/
+#battle-bottom{
+    margin-top: -40px;
+    margin-bottom: 20px;
+    background-color: #FDD67C;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: 30px 30px 0px 30px;
+}
+
+#battle-bottom > div{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+}
+
+#todo-main{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 7px;
+}
+
+.todo-list{
+    font-size: 20px;
+    margin-left: 10px;
+    width: 100%;
+    margin-right: -20px;
+    border-bottom: white solid 2px;
+}
+
+.input-text{
+    background-color: transparent;
+    border: none;
+    border-bottom: white solid 2px;
+    width: 100%;
+    height: 40px;
+    text-align : start;
+    margin: 0px 8px;
+    font-size: 20px;
+    width: 100%;
+}

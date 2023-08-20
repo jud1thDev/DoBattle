@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +7,40 @@
   <title>Do Battle - 배틀 생성</title>
 </head>
 <body>
-<h1>배틀 생성</h1>
+  <div id="make-top">
+    <div id="top-menubar">
+      <div id="menu">
+        <img th:src="@{/image/menu-yellow.svg}" onclick = "changePage('../main/menubar.html')">
+      </div>
+      <div id="logo">
+        <img th:src="@{/image/logo-yellow.svg}">
+      </div>
+      <div id="nothing"></div>
+    </div>
+    <div id="make-start">
+      <b>김배틀</b>님의 <br>
+      새로운 배틀을 시작합니다.
+    </div>
+  </div>
 
-<form action="/battleMakeSuccess" method="post">
-  <input type="text" name="battleName" placeholder="배틀 이름" required>
-  <select name="battleCategory">
-    <option value="study">공부</option>
-    <option value="exercise">운동</option>
-    <option value="habit">습관</option>
-  </select>
-  <input type="text" name="startDate" placeholder="시작일 (yyyy-mm-dd)" required>
-  <input type="text" name="endDate" placeholder="종료일 (yyyy-mm-dd)" required>
-  <input type="submit" value="배틀 생성">
-</form>
+  <div id="make-bottom">
+    <div id="fireImage">
+      <img th:src="@{/image/fire.svg}">
+    </div>
+    <form action="/battleMakeSuccess" method="post" id="getInform" >
+      <input type="text" name="battleName" placeholder="배틀 이름" required id="make-battle-name">
+      <select name="battleCategory" id="battle-categ">
+        <option disabled selected>배틀 카테고리</option>
+        <option value="study">공부</option>
+        <option value="exercise">운동</option>
+        <option value="habit">습관</option>
+        <option value="food">식단</option>
+        <option value="book">독서</option>
+      </select>
+      <input type="text" name="startDate" placeholder="시작일 (yyyy-mm-dd)" required>
+      <input type="text" name="endDate" placeholder="종료일 (yyyy-mm-dd)" required>
+      <input type="submit" value="배틀 시작!" id="button">
+    </form>
+  </div>
 </body>
 </html>

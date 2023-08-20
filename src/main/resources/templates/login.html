@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="login.css" rel="stylesheet">
+  <script src="changePage.js"></script>
   <title>Do Battle - 로그인</title>
 </head>
 <body>
@@ -14,7 +15,7 @@
     <input type="text" name="identify" placeholder="아이디" required id="id">
     <input type="password" name="password" placeholder="비밀번호" required id="pw">
     <input type="submit" value="로그인" id="button">
-    <button>회원가입</button>
+    <div onclick="changePage('signup')" id="signUp">회원가입</div>
   </form>
 </body>
 </html>

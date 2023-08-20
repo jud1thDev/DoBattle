@@ -32,12 +32,20 @@ body{
     height: 50px;
 }
 
-#login > #button, button{
+#button, #signUp{
     border: none;
     background-color: #FF5C00;
     border-radius: 15px;
     color:#FFF7E8;
-    height: 65px;
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
+}
+
+#button{
+    height: 65px;
+}
+
+#signUp{
+    padding: 18.1px 0px;
 }
