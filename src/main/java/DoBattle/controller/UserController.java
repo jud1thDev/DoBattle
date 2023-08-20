@@ -56,6 +56,31 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String username, @RequestParam String password, HttpSession session) {
+        // 사용자 아이디와 패스워드를 이용하여 DB에서 정보를 조회하고 매칭 여부를 확인하는 로직
+        User user = userService.loginUser(username, password);
+
+        if (user != null) {
+            session.setAttribute("currentUser", user);
+            return "redirect:/main";
+        } else {
+            return "redirect:/login?error=InvalidCredentials";
+        }
+    }
+
+    @GetMapping("/showMain")
+    public String showMainPage(HttpSession session, Model model) { // 메서드 이름을 showMainPage로 변경
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser == null) {
+            return "redirect:/login";  // 세션에 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+        }
+
+        model.addAttribute("currentUser", currentUser);
+        return "main";
+    }
+
     @PostMapping("/makeBattleFromUser")
     public String makeBattleFromUser(@RequestParam String battleName, @RequestParam String battleCategory, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");

@@ -21,4 +21,14 @@ public class UserService {
         return userRepository.findByIdentify(identify) == null;
     }
 
+    public User loginUser(String identify, String password) {
+        User user = userRepository.findByIdentify(identify);
+
+        if (user != null && user.getPassword().equals(password)) {
+            return user; // 로그인 성공
+        }
+
+        return null; // 로그인 실패
+    }
+
 }

@@ -4,6 +4,8 @@ import DoBattle.domain.Battle;
 import DoBattle.repository.BattleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.Random;
 
 @Service
@@ -15,6 +17,7 @@ public class BattleService {
         this.battleRepository = battleRepository;
     }
 
+    @Transactional
     public Battle makeBattle(Battle battle) {
         return battleRepository.save(battle);
     }
