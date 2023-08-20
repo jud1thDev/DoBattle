@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,14 @@
   <title>Do Battle - 로그인</title>
 </head>
 <body>
-<h1>로그인</h1>
-
-<form action="/main" method="post">
-  <input type="text" name="identify" placeholder="아이디" required>
-  <input type="password" name="password" placeholder="비밀번호" required>
-  <input type="submit" value="로그인">
-</form>
+  <div id="logo">
+    <img th:src="@{/image/logo-orange.svg}">
+  </div>
+  <form action="/main" method="post" id="login">
+    <input type="text" name="identify" placeholder="아이디" required id="id">
+    <input type="password" name="password" placeholder="비밀번호" required id="pw">
+    <input type="submit" value="로그인" id="button">
+    <button>회원가입</button>
+  </form>
 </body>
 </html>
