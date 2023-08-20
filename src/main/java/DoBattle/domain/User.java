@@ -18,7 +18,7 @@ public class User {
     }
 
     public void setIdentify(String identify) {
-        this.username = identify;
+        this.identify = identify;
     }
 
     public void setPassword(String password) {

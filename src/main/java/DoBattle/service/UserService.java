@@ -14,11 +14,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean isUsernameAvailable(String idendify) {
-        return userRepository.findByUsername(idendify) == null;
-    }
-
     public User registerUser(User user) {
         return userRepository.save(user);
     }
+    public boolean isIdentifyAvailable(String identify) {
+        return userRepository.findByIdentify(identify) == null;
+    }
+
 }
