@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="signup.css" rel="stylesheet">
+  <title>Do Battle - 회원가입</title>
+</head>
+<body>
+<h1>회원가입</h1>
+
+<form action="/signup" method="post">
+  <input type="text" name="username" placeholder="사용자 이름" required>
+  <input type="text" name="identify" placeholder="아이디" required>
+  <input type="password" name="password" placeholder="비밀번호" required>
+  <input type="submit" value="회원가입">
+</form>
+
+<p th:if="${param.error}" class="error-message">이미 사용 중인 아이디입니다.</p>
+</body>
+</html>

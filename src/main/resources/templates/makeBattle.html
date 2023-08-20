@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="makeBattle.css" rel="stylesheet">
+  <title>Do Battle - 배틀 생성</title>
+</head>
+<body>
+<h1>배틀 생성</h1>
+
+<form action="/battleMakeSuccess" method="post">
+  <input type="text" name="battleName" placeholder="배틀 이름" required>
+  <select name="battleCategory">
+    <option value="study">공부</option>
+    <option value="exercise">운동</option>
+    <option value="habit">습관</option>
+  </select>
+  <input type="text" name="startDate" placeholder="시작일 (yyyy-mm-dd)" required>
+  <input type="text" name="endDate" placeholder="종료일 (yyyy-mm-dd)" required>
+  <input type="submit" value="배틀 생성">
+</form>
+</body>
+</html>
