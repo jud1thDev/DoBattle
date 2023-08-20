@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 
 @Controller
 public class UserController {
@@ -23,11 +21,6 @@ public class UserController {
     public UserController(UserService userService, BattleService battleService) {
         this.userService = userService;
         this.battleService = battleService;
-    }
-
-    @GetMapping("/main")
-    public String mainPage() {
-        return "main";
     }
 
     @GetMapping("/signup")
@@ -57,24 +50,26 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        // 사용자 아이디와 패스워드를 이용하여 DB에서 정보를 조회하고 매칭 여부를 확인하는 로직
-        User user = userService.loginUser(username, password);
+    public String loginUser(@RequestParam String identify, @RequestParam String password, HttpSession session, Model model) {
+
+        User user = userService.loginUser(identify, password);
 
         if (user != null) {
             session.setAttribute("currentUser", user);
+            model.addAttribute("currentUser", user); // currentUser 정보를 모델에 추가
             return "redirect:/main";
         } else {
             return "redirect:/login?error=InvalidCredentials";
         }
     }
 
-    @GetMapping("/showMain")
-    public String showMainPage(HttpSession session, Model model) { // 메서드 이름을 showMainPage로 변경
+
+    @GetMapping("/main")
+    public String showMainPage(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser == null) {
-            return "redirect:/login";  // 세션에 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            return "redirect:/login"; // 없으면 로그인 페이지로 이동
         }
 
         model.addAttribute("currentUser", currentUser);
