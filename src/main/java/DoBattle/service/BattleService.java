@@ -23,7 +23,7 @@ public class BattleService {
                                String endDate,
                                String identify) {
 
-        String battleCode = generateRandomCode();
+        String battleCode = generateUniqueBattleCode();
 
         Battle newBattle = new Battle();
         newBattle.setBattleName(battleName);
@@ -36,9 +36,22 @@ public class BattleService {
         return battleRepository.save(newBattle);
     }
 
-    private String generateRandomCode() {
+    private String generateUniqueBattleCode() {
         Random random = new Random();
-        int code = 100000 + random.nextInt(900000);
-        return String.valueOf(code);
+        String battleCode = null;
+        boolean isCodeUnique = false;
+
+        while (!isCodeUnique) {
+            int codeValue = 100000 + random.nextInt(900000);
+            battleCode = String.valueOf(codeValue);
+
+            // 중복검사
+            Battle existingBattle = battleRepository.findByBattleCode(battleCode);
+            if (existingBattle == null) {
+                isCodeUnique = true;
+            }
+        }
+
+        return battleCode;
     }
 }
