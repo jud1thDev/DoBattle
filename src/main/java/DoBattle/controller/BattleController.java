@@ -11,48 +11,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 
 @Controller
 public class BattleController {
-    private final BattleService battleService;
 
     @Autowired
-    public BattleController(BattleService battleService) {
-        this.battleService = battleService;
-    }
+    private BattleService battleService;
 
     @GetMapping("/makeBattle")
-    public String makeBattlePage() {
+    public String showMakeBattlePage() {
         return "makeBattle";
     }
 
     @PostMapping("/makeBattle")
-    public String makeBattle(@RequestParam String battleName,
-                             @RequestParam String battleCategory,
-                             @RequestParam String startDate,
-                             @RequestParam String endDate,
-                             HttpSession session) {
+    public String createBattle(@RequestParam String battleName,
+                               @RequestParam String battleCategory,
+                               @RequestParam String startDate,
+                               @RequestParam String endDate,
+                               HttpSession session,
+                               Model model) {
+
+        // 현재 로그인된 유저의 정보를 세션에서 읽어옴(SpringConfig로 하는게 좋긴함..)
         User currentUser = (User) session.getAttribute("currentUser");
 
-        Battle newBattle = new Battle();
-        newBattle.setBattleName(battleName);
-        newBattle.setBattleCategory(battleCategory);
-        newBattle.setStartDate(LocalDate.parse(startDate));
-        newBattle.setEndDate(LocalDate.parse(endDate));
-        newBattle.setCreator(currentUser);
+        if (currentUser != null) {
+            String identify = currentUser.getIdentify();
 
-        String battleCode = battleService.generateUniqueBattleCode();
-        newBattle.setCode(battleCode);
+            Battle createdBattle = battleService.createBattle(battleName, battleCategory, startDate, endDate, identify);
 
-        battleService.makeBattle(newBattle);
+            model.addAttribute("battleCode", createdBattle.getBattleCode());
 
-        return "redirect:/makeBattleSuccess?battleCode=" + battleCode;
-    }
+            return "makeBattleSuccess";
+        }
 
-    @GetMapping("/makeBattleSuccess")
-    public String battleBattleSuccessPage(@RequestParam String battleCode, Model model) {
-        model.addAttribute("battleCode", battleCode);
-        return "makeBattleSuccess";
+        // 로그인 된 사용자가 없으면
+        return "redirect:/login";
     }
 }

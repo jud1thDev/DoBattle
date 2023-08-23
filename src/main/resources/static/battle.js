@@ -11,7 +11,7 @@ function todoClick(){
     battleBottom.appendChild(newDiv);
     newDiv.appendChild(newText);
 
-    newText.addEventListener("keyup", function(event) {
+    newText.addEventListenera("keyup", function(event) {
         if (event.key === "Enter") {
             battleBottom.removeChild(newDiv);
             todo = newText.value;

@@ -6,31 +6,31 @@
     <title>Do Battle - main</title>
 </head>
 <body>
-    <!--<h1 th:text="'환영합니다, ' + ${currentUser.username} + '님!'"></h1>-->
-    <div id="main-top">
-        <div id="top-menubar">
-            <div id="menu">
-                <img th:src="@{/image/menu-yellow.svg}" onclick = "changeMenu('menubar', 1)">
-            </div>
-            <div id="logo">
-                <img th:src="@{/image/logo-yellow.svg}">
-            </div>
+<!--<h1 th:text="'환영합니다, ' + ${currentUser.username} + '님!'"></h1>-->
+<div id="main-top">
+    <div id="top-menubar">
+        <div id="menu">
+            <img th:src="@{/image/menu-yellow.svg}" onclick = "changeMenu('menubar', 1)">
         </div>
-        <div id="welcome">
-            <b>어서오세요 <span th:text="${currentUser.username}"></span><br></b>
-            오늘도 배틀할 준비가 되셨나요?
+        <div id="logo">
+            <img th:src="@{/image/logo-yellow.svg}">
         </div>
     </div>
+    <div id="welcome">
+        <b>어서오세요 <span th:text="${currentUser.username}"></span><br></b>
+        오늘도 배틀할 준비가 되셨나요?
+    </div>
+</div>
 
-    <div id="main-bottom">
-        <div id="example-1" onclick="changePage('battle.html')">
-            <div id="write">최근 가장 잘 하고 있는 배틀</div>
-            <div id="bottom-box">
-                <div id="battle-name">배틀이름</div>
-                <div id="battle-date">xx.xx~xx.xx</div>
-                <div id="versus">vs 상대이름</div>
-            </div>
+<div id="main-bottom">
+    <div id="example-1" onclick="changePage('battle.html')">
+        <div id="write">최근 가장 잘 하고 있는 배틀</div>
+        <div id="bottom-box">
+            <div id="battle-name">배틀이름</div>
+            <div id="battle-date">xx.xx~xx.xx</div>
+            <div id="versus">vs 상대이름</div>
         </div>
     </div>
+</div>
 </body>
 </html>

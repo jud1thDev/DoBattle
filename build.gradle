@@ -22,6 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // DB접근기술인 JPA
 	runtimeOnly 'mysql:mysql-connector-java' // Mysql 데이터베이스 라이브러리 추가
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26' // Use the appropriate version
+
 }
 
 tasks.named('test') {

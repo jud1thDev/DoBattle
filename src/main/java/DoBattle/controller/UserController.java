@@ -75,21 +75,4 @@ public class UserController {
         model.addAttribute("currentUser", currentUser);
         return "main";
     }
-
-    @PostMapping("/makeBattleFromUser")
-    public String makeBattleFromUser(@RequestParam String battleName, @RequestParam String battleCategory, HttpSession session) {
-        User currentUser = (User) session.getAttribute("currentUser");
-
-        String battleCode = battleService.generateUniqueBattleCode();
-
-        Battle newBattle = new Battle();
-        newBattle.setBattleName(battleName);
-        newBattle.setBattleCategory(battleCategory);
-        newBattle.setCode(battleCode);
-        newBattle.setCreator(currentUser);
-
-        battleService.makeBattle(newBattle);
-
-        return "redirect:/makeBattleSuccess?battleCode=" + battleCode;
-    }
 }

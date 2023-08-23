@@ -9,16 +9,16 @@ public class Battle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String battleName;
     private String battleCategory;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String code; // 난수코드
-
-    @ManyToOne
-    private User creator;
+    private String battleCode; // 난수코드
+    private String createUser;
 
     // Getter and Setter 메서드들
+
     public Long getId() {
         return id;
     }
@@ -59,32 +59,19 @@ public class Battle {
         this.endDate = endDate;
     }
 
-    public User getCreator() {
-        return creator;
+    public String getBattleCode() {
+        return battleCode;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setBattleCode(String battleCode) {
+        this.battleCode = battleCode;
     }
 
-    public String getCode() {
-        return code;
+    public String getCreateUser() {
+        return createUser;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    // toString 메서드 - 객체의 정보를 문자열로 표현
-    @Override
-    public String toString() {
-        return "Battle{" +
-                "id=" + id +
-                ", battleName='" + battleName + '\'' +
-                ", battleCategory='" + battleCategory + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", creator=" + creator +
-                '}';
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 }

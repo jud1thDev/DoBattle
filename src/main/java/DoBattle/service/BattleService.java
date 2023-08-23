@@ -1,39 +1,44 @@
 package DoBattle.service;
 
 import DoBattle.domain.Battle;
+import DoBattle.domain.User;
 import DoBattle.repository.BattleRepository;
+import DoBattle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Random;
 
 @Service
 public class BattleService {
-    private final BattleRepository battleRepository;
 
     @Autowired
-    public BattleService(BattleRepository battleRepository) {
-        this.battleRepository = battleRepository;
+    private BattleRepository battleRepository;
+
+    public Battle createBattle(String battleName,
+                               String battleCategory,
+                               String startDate,
+                               String endDate,
+                               String identify) {
+
+        String battleCode = generateRandomCode();
+
+        Battle newBattle = new Battle();
+        newBattle.setBattleName(battleName);
+        newBattle.setBattleCategory(battleCategory);
+        newBattle.setStartDate(LocalDate.parse(startDate));
+        newBattle.setEndDate(LocalDate.parse(endDate));
+        newBattle.setBattleCode(battleCode);
+        newBattle.setCreateUser(identify);
+
+        return battleRepository.save(newBattle);
     }
 
-    @Transactional
-    public Battle makeBattle(Battle battle) {
-        return battleRepository.save(battle);
-    }
-
-    public boolean isCodeAvailable(String code) {
-        return battleRepository.findByCode(code) == null;
-    }
-
-    public String generateUniqueBattleCode() {
+    private String generateRandomCode() {
         Random random = new Random();
-        String battleCode;
-        do {
-            int randomNumber = 100000 + random.nextInt(900000);
-            battleCode = String.valueOf(randomNumber);
-        } while (!isCodeAvailable(battleCode));
-        return battleCode;
+        int code = 100000 + random.nextInt(900000);
+        return String.valueOf(code);
     }
 }
-
