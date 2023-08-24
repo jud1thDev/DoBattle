@@ -56,4 +56,40 @@ public class BattleController {
         // 로그인 된 사용자가 없으면
         return "redirect:/login";
     }
+
+    @GetMapping("/joinBattle")
+    public String showJoinBattlePage(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser != null) {
+            model.addAttribute("currentUser", currentUser);
+            return "joinBattle";
+        }
+
+        return "redirect:/login";
+    }
+
+    @PostMapping("/joinBattle")
+    public String joinBattle(@RequestParam String battleCode,
+                             HttpSession session,
+                             Model model) {
+
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser != null) {
+            String identify = currentUser.getIdentify();
+
+            Battle joinedBattle = battleService.joinBattle(battleCode, identify);
+
+            if (joinedBattle != null) {
+                model.addAttribute("joinedBattle", joinedBattle);
+                return "joinBattleSuccess";
+            } else {
+                model.addAttribute("joinBattleError", "배틀 참여에 실패했습니다. 이미 참여된 배틀이거나 잘못된 코드일 수 있습니다.");
+                return "makeBattle";
+            }
+        }
+
+        return "redirect:/login";
+    }
 }

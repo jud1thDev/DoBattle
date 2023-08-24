@@ -80,7 +80,7 @@ public class Battle {
         return joinUser;
     }
 
-    public void setJoinUser(String createUser) {
+    public void setJoinUser(String joinUser) {
         this.joinUser = joinUser;
     }
 }

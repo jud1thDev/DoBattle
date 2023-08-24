@@ -31,12 +31,15 @@
     </div>
     <form action="/joinBattle" method="post" id="about-code">
         <label for="code">초대코드를 입력하고<br>바로 배틀에 참여하세요!</label>
-        <input type="text" name="code" id="code" placeholder="코드를 입력하세요">
+        <input type="text" name="battleCode" id="code" placeholder="코드를 입력하세요" required>
+        <input type="submit" value="배틀 참여하기" id="button">
     </form>
 </div>
 
+<!--
 <div id="button">
     <button onclick = "changePage('joinBattleSuccess')">배틀 참여하기!</button>
 </div>
+-->
 </body>
 </html>

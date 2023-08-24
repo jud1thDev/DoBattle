@@ -54,4 +54,15 @@ public class BattleService {
 
         return battleCode;
     }
+
+    public Battle joinBattle(String battleCode, String identify) {
+        Battle battle = battleRepository.findByBattleCode(battleCode);
+
+        if (battle != null && battle.getJoinUser() == null) {
+            battle.setJoinUser(identify);
+            return battleRepository.save(battle);
+        }
+
+        return null;
+    }
 }
