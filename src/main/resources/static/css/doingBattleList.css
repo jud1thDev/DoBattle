@@ -1,0 +1,77 @@
+body{
+    background-color: #FFF7E8;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0px;
+}
+
+/*상단바*/
+#main-top{
+    background-color: #FDD67C;
+    height: 150px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-bottom: 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#top-menubar{
+    display: flex;
+    justify-content: space-between;
+}
+
+#menu{
+    padding: 70px 0px 0px 20px;
+}
+
+#top-write{
+    padding: 73px 0px 0px 0px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#nothing{
+    padding-right: 20px;
+    width: 32px;
+}
+
+/*하단바*/
+#main-bottom{
+    margin: 180px 30px 0px 30px;
+    z-index: 2;
+}
+
+.bottom-box{
+    background-color: #FF5C00;
+    color:white;
+    margin: 20px 0px;
+    height: 150px;
+    border-radius: 40px;
+    display:flex;
+    flex-direction : column;
+    justify-content: flex-start;
+    padding-left: 30px;
+}
+
+.battle-name{
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.battle-date{
+    opacity: 70%;
+}
+
+.versus{
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: end;
+    padding-right: 30px;
+}
+

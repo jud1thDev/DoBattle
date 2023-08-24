@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+  <link href="css/myPage.css" rel="stylesheet">
+  <script src="js/changePage.js"></script>
+  <!--폰트 설정, css 먹이기, 자바스크립트 먹이기-->
+  <title>DoBattle - 마이페이지</title>
+</head>
+
+<body>
+<div id="myPage-top">
+
+  <div id="top-menubar">
+    <img id=menu src="/image/menu-orange.svg" onclick="changePage('.html')">
+    <div id="top-write"> 마이 페이지 </div>
+    <img id="setting" src="/image/setting.svg">
+  </div>
+</div>
+<div id="mypage-bottom">
+  <div id=profile-wrapper> <!-- 부모요소 -->
+    <div id=profile-circle>
+      <div id=profile-pic>
+        <img id=my-profile-pic src="/Users/yunmacbook/Desktop/Do-Battle/image/profile.jpg">
+      </div>
+    </div>
+    <div id=profile-rect>
+      <div id=my-username> <b>김배틀</b></div>
+      <div id=my-id>kimbattle01234</div>
+    </div>
+
+  </div>
+
+  <div class="battle-history">
+    <div id="battle-trial-num">
+      <div class="history-title">지금까지 <br>참여한 배틀</div>
+      <div class="history-num">8개</div>
+    </div>
+
+    <div class="blank"></div>
+
+    <div id="battle-winning-num">
+      <div class="history-title">지금까지 <br>승리한 배틀</div>
+      <div class="history-num">5개</div>
+    </div>
+  </div>
+
+  <div id= "past-battle">
+    <div></div>
+    <div id="past-battle-txt">이전 배틀 기록 보러가기</div>
+    <img id = "past-battle-arrow"src= "/image/arrow.svg">
+  </div>
+</div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="css/calender.css" rel="stylesheet">
+    <script src="js/calender.js"></script>
+    <script src="js/changePage.js"></script>
+    <title>Do battle - 배틀달력</title>
+</head>
+<body>
+<div id="top-menu">
+    <div><img src="/image/arrow.svg" onclick = "changePage('battle')"></div>
+    <div id="write">배틀 상세보기</div>
+    <div id="nothing"></div>
+</div>
+
+<table class="Calendar">
+    <thead>
+    <tr>
+        <td colspan="5">
+            <span id="calYear"></span><span>-</span><span id="calMonth"></span>
+        </td>
+        <!-- <td>
+            <span onClick="prevCalendar();" style="cursor:pointer;">&#60;</span>
+            <span onClick="nextCalendar();" style="cursor:pointer;">&#62;</span>
+        </td> -->
+        <td onClick="prevCalendar();" style="cursor:pointer;" class="arrow">&#60;</td>
+        <td onClick="nextCalendar();" style="cursor:pointer;" class="arrow">&#62;</td>
+    </tr>
+    <tr>
+        <td>일</td>
+        <td>월</td>
+        <td>화</td>
+        <td>수</td>
+        <td>목</td>
+        <td>금</td>
+        <td>토</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+</table>
+
+<div class="battle-result">
+    <div><span id = "click-date"></span>의 배틀 결과</div>
+    <div>
+        <div><img src="/image/progress-face-1.svg"></div>
+        <div><b>김배틀</b> 님이 34% 차이로 <br>승리했어요!</div>
+    </div>
+</div>
+</body>
+</html>

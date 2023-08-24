@@ -1,0 +1,186 @@
+body {
+    background-color: #FDD67C;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0px;
+}
+
+#myPage-top {
+    background-color: #FFF7E8;
+    height: 150px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-bottom: 25px;
+}
+
+#top-menubar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#menu {
+    padding: 70px 0px 0px 20px;
+}
+
+#top-write {
+    padding: 73px 0px 0px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+#setting {
+    padding-right: 15px;
+    padding-top: 70px;
+    width: 46px;
+    height: 46px;
+}
+
+#profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* position: relative; */
+}
+
+
+#profile-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #FFF7E8;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    /* position: absolute;
+    left: 50%;
+    transform: translateX(-50%); */
+}
+
+#profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #004bb5;
+    margin: auto;
+    position: absolute;
+
+
+    z-index: 3;
+    overflow: hidden;
+    /* position: absolute;
+    left: 50%;
+    transform: translateX(-50%); */
+}
+
+#my-profile-pic {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    /*빠져나오지 말고 꽉 채워라*/
+    position: absolute;
+}
+
+#profile-rect {
+    background-color: #FFF7E8;
+    color: black;
+    height: 220px;
+    margin-top: -80px;
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius: 30px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#my-username {
+    font-size: 24px;
+    padding-top: 100px;
+}
+
+#my-id {
+    color: #959595;
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.battle-history {
+    display: flex;
+    border-radius: 30px;
+    padding: 20px;
+    margin: 20px;
+    justify-content: space-between;
+}
+.blank {
+    width: 30px;
+    height: 10px;
+}
+
+#battle-trial-num {
+    width: 55vw;
+    height: 180px;
+    background-color: #FFF7E8;
+    border-radius: 30px;
+}
+
+#battle-winning-num {
+    width: 55vw;
+    height: 180px;
+    background-color: #FFF7E8;
+    border-radius: 30px;
+}
+
+.history-title {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.history-num {
+    color: #FF5C00;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: right;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    font-family: Noto Sans KR;
+
+}
+
+#past-battle{
+    display: flex;
+    justify-content: space-between;
+    height: 75px;
+    background-color: #FFF7E8;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 40px;
+    border-radius: 30px;
+}
+
+#past-battle-txt{
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-left: -140px;
+    text-align: left;
+}
+
+#past-battle-arrow{
+    width: 40px;
+    height: 40px;
+    transform: scaleX(-1);
+    margin-top: 15px;
+    margin-right: 20px;
+
+}
