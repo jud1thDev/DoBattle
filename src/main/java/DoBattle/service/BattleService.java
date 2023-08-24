@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -64,5 +65,10 @@ public class BattleService {
         }
 
         return null;
+    }
+
+    public List<Battle> getJoinedBattles(String identify) {
+        List<Battle> joinedBattles = battleRepository.findByCreateUserOrJoinUser(identify, identify);
+        return joinedBattles;
     }
 }

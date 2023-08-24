@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 <div id="main-top">
     <div id="top-menubar">
         <div id="menu">
-            <img src="/image/menu-yellow.svg" onclick = "changePage('menubar')">
+            <img src="/image/menu-yellow.svg" onclick = "changePage('menubar.html')">
         </div>
         <div id="top-write">
             진행중인 배틀
@@ -22,12 +22,15 @@
     </div>
 </div>
 
-<div id="main-bottom">
-    <!-- <div class="bottom-box" onclick = "changePage('battle.html')">
-        <div class="battle-name">배틀이름</div>
-        <div class="battle-date">xx.xx~xx.xx</div>
-        <div class="versus">vs 상대이름</div>
-    </div> -->
-</div>
+<ul>
+    <li th:each="battle : ${joinedBattles}">
+        <div>
+            <h2 th:text="${battle.battleName}"></h2>
+            <p>카테고리: <span th:text="${battle.battleCategory}"></span></p>
+            <p>기간: <span th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}"></span></p>
+        </div>
+    </li>
+</ul>
+
 </body>
 </html>

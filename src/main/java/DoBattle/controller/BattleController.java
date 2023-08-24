@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class BattleController {
@@ -92,4 +93,39 @@ public class BattleController {
 
         return "redirect:/login";
     }
+
+    @GetMapping("/battle")
+    public String showBattlePage(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser != null) {
+            String identify = currentUser.getIdentify();
+
+            List<Battle> joinedBattles = battleService.getJoinedBattles(identify);
+            model.addAttribute("joinedBattles", joinedBattles);
+            // joinedBattles는 createUser나 joinUser에 로그인된 유저와 동일한 identify가 존재해야함
+
+            return "battle";
+        }
+
+        return "redirect:/login";
+    }
+
+    @GetMapping("/doingBattleList")
+    public String showMainPage(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser == null) {
+            return "redirect:/login"; // 없으면 로그인 페이지로 이동
+        }
+
+        model.addAttribute("currentUser", currentUser);
+
+        List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
+        model.addAttribute("joinedBattles", joinedBattles);
+        // joinedBattles는 createUser나 joinUser에 로그인된 유저와 동일한 identify가 존재해야함
+
+        return "doingBattleList";
+    }
+
 }

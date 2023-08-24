@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -73,7 +74,13 @@ public class UserController {
         }
 
         model.addAttribute("currentUser", currentUser);
+
+        List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
+        model.addAttribute("joinedBattles", joinedBattles);
+        // joinedBattles는 createUser나 joinUser에 로그인된 유저와 동일한 identify가 존재해야함
+
         return "main";
+
     }
 
 }
