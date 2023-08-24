@@ -16,6 +16,7 @@ public class Battle {
     private LocalDate endDate;
     private String battleCode; // 난수코드
     private String createUser;
+    private String joinUser;
 
     // Getter and Setter 메서드들
 
@@ -73,5 +74,13 @@ public class Battle {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    public String getJoinUser() {
+        return joinUser;
+    }
+
+    public void setJoinUser(String createUser) {
+        this.joinUser = joinUser;
     }
 }

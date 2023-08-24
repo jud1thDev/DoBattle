@@ -19,7 +19,7 @@
       <div id="nothing"></div>
     </div>
     <div id="make-start">
-      <b>김배틀</b>님의 <br>
+      <span th:text="${currentUser.username}"></span>님의 <br>
       새로운 배틀을 시작합니다.
     </div>
   </div>
@@ -28,7 +28,7 @@
     <div id="fireImage">
       <img src="/image/fire.svg">
     </div>
-    <form action="/makeBattle" method="post" id="getInform" >
+    <form action="/makeBattle" method="post" id="getInform" th:if="${currentUser != null}">
       <input type="text" name="battleName" placeholder="배틀 이름" required id="make-battle-name">
       <select name="battleCategory" id="battle-categ" required>
         <option disabled selected>배틀 카테고리</option>

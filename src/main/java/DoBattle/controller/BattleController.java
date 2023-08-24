@@ -19,8 +19,17 @@ public class BattleController {
     private BattleService battleService;
 
     @GetMapping("/makeBattle")
-    public String showMakeBattlePage() {
-        return "makeBattle";
+    public String showMakeBattlePage(HttpSession session, Model model) {
+        // 현재 로그인된 유저의 정보를 세션에서 읽어옴(SpringConfig로 하는게 좋긴함..)
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        if (currentUser != null) {
+            model.addAttribute("currentUser", currentUser);  // 사용자 정보를 모델에 추가
+            return "makeBattle";
+        }
+
+        // 로그인 된 사용자가 없으면
+        return "redirect:/login";
     }
 
     @PostMapping("/makeBattle")
