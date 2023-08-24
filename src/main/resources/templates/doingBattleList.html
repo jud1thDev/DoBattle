@@ -6,31 +6,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="css/doingBattleList.css" rel="stylesheet">
     <script src="js/changePage.js"></script>
-    <script src="js/doingBattleList.js"></script>
     <title>Do Battle - 진행중인 배틀들</title>
 </head>
 <body>
-<div id="main-top">
-    <div id="top-menubar">
-        <div id="menu">
-            <img src="/image/menu-yellow.svg" onclick = "changePage('menubar.html')">
+    <div id="main-top">
+        <div id="top-menubar">
+            <div id="menu">
+                <img src="/image/menu-yellow.svg" onclick = "changePage('menu.html')">
+            </div>
+            <div id="top-write">
+                진행중인 배틀
+            </div>
+            <div id="nothing"></div>
         </div>
-        <div id="top-write">
-            진행중인 배틀
-        </div>
-        <div id="nothing"></div>
     </div>
-</div>
 
-<ul>
-    <li th:each="battle : ${joinedBattles}">
-        <div>
-            <h2 th:text="${battle.battleName}"></h2>
-            <p>카테고리: <span th:text="${battle.battleCategory}"></span></p>
-            <p>기간: <span th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}"></span></p>
+    <div th:each="battle : ${joinedBattles}" id="main-bottom">
+        <div class="bottom-box" onclick = "changePage('battle')">
+            <div th:text="${battle.battleName}" class="battle-name"></div>
+            <div th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}" class="battle-date"></div>
+            <div class="versus">vs 상대이름</div>
         </div>
-    </li>
-</ul>
-
+    </div>
 </body>
 </html>

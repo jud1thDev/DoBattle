@@ -64,13 +64,14 @@ body{
 }
 
 #getInform > input, select{
+    color:black;
     border: 1px gray solid;
     border-radius: 10px;
     padding-left: 20px;
     font-size: 15px;
 }
 
-#battle-date, #battle-categ{
+input[type='date']{
     padding-right: 20px;
 }
 
@@ -88,7 +89,7 @@ body{
 input[type='date']::before {
     content: attr(placeholder);
     /* width: 100%;
-    height: 100%; */
+    height: 33%; */
 }
 
 select option[disabled] {
@@ -101,7 +102,7 @@ select {
     appearance:none /* 화살표 없애기 */
 }
 
-select option:disabled {
+/* select option:disabled {
     color: gray;
     font-weight: bold;
 }
@@ -111,4 +112,4 @@ select.placeholder-shown {
   }
   select.placeholder-hidden {
     color: black;
-  }
+  } */

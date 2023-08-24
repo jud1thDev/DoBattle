@@ -132,6 +132,9 @@ body{
 }
 
 /*투두리스트*/
+form{
+    width: 100%;
+}
 #battle-bottom{
     margin-top: 500px;
     margin-bottom: 20px;
@@ -149,6 +152,12 @@ body{
     padding-top: 12px;
 }
 
+#battle-bottom > form{  /*중복이니까 수정*/
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+}
+
 #todo-main{
     font-size: 30px;
     font-weight: bold;
@@ -157,6 +166,7 @@ body{
 }
 
 .todo-list{
+    margin-bottom: 1.8px;
     font-size: 20px;
     padding-left: 10px;
     margin-left: 10px;
@@ -175,4 +185,20 @@ body{
     margin: 0px 8px;
     font-size: 20px;
     width: 100%;
-}}
+}
+
+.fire-button{
+    background-color: transparent;
+    background-image: url('../image/todo-fire.svg');
+    background-repeat: no-repeat;
+    border: none;
+    width: 35px;
+    height: 45px;
+    cursor: pointer;
+    color: transparent;
+}
+/*.fire-button.clicked{
+    background-image: url('cal-fire-orange.svg');
+    background-repeat: no-repeat;
+    color: transparent;
+}*/

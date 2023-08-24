@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
   <link href="css/makeBattle.css" rel="stylesheet">
+  <script src="js/makeBattle.js"></script>
+  <script src="js/dateConfirm.js"></script>
+  <script src="js/changePage.js"></script>
   <title>Do Battle - 배틀 생성</title>
 </head>
 <body>
   <div id="make-top">
     <div id="top-menubar">
       <div id="menu">
-        <img src="/image/menu-yellow.svg" onclick = "changePage('menubar.html')">
+        <img src="/image/menu-yellow.svg" onclick = "changePage('menu.html')">
       </div>
       <div id="logo">
         <img src="/image/logo-yellow.svg">
@@ -28,7 +31,7 @@
     <div id="fireImage">
       <img src="/image/fire.svg">
     </div>
-    <form action="/makeBattle" method="post" id="getInform" th:if="${currentUser != null}">
+    <form action="/makeBattle" method="post" id="getInform" th:if="${currentUser != null}" onsubmit="return dateConfirm();">
       <input type="text" name="battleName" placeholder="배틀 이름" required id="make-battle-name">
       <select name="battleCategory" id="battle-categ" required>
         <option disabled selected>배틀 카테고리</option>
@@ -38,8 +41,8 @@
         <option value="food">식단</option>
         <option value="book">독서</option>
       </select>
-      <input type="text" name="startDate" placeholder="시작일 (yyyy-mm-dd)" required>
-      <input type="text" name="endDate" placeholder="종료일 (yyyy-mm-dd)" required>
+      <input type="hidden" name="startDate" id="todayDate">
+      <input type="date" name="endDate" placeholder="배틀 기간 " id="pickDate" required>
       <input type="submit" value="배틀 시작!" id="button">
     </form>
   </div>
