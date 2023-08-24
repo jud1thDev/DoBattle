@@ -6,6 +6,11 @@ body{
 
 #real-top{
     background-color:  #FFF7E8;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 /*상단바*/
@@ -128,12 +133,14 @@ body{
 
 /*투두리스트*/
 #battle-bottom{
-    margin-top: -40px;
+    margin-top: 500px;
     margin-bottom: 20px;
     background-color: #FDD67C;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     padding: 30px 30px 0px 30px;
+    position: relative;
+    z-index: 2;
 }
 
 #battle-bottom > div{
@@ -151,6 +158,7 @@ body{
 
 .todo-list{
     font-size: 20px;
+    padding-left: 10px;
     margin-left: 10px;
     width: 100%;
     margin-right: -20px;
@@ -167,4 +175,4 @@ body{
     margin: 0px 8px;
     font-size: 20px;
     width: 100%;
-}
+}}

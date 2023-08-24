@@ -75,7 +75,7 @@ body{
     margin-bottom: 20px;
 }
 
-#agree{
+.agree{
     margin-top: 10px;
 }
 
@@ -83,10 +83,10 @@ body{
     margin-top: 30px;
 }
 
-#agree > label{
+.agree > label{
     font-size: 14px;
 }
 
-#agreecheck{
+.agreecheck{
     accent-color: #FF5C00;
 }

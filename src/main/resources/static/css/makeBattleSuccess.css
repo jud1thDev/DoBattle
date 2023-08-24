@@ -27,17 +27,18 @@ body{
     flex-direction: column;
 }
 
-label{
+#label{
     font-size: 15px;
     color: gray;
     margin-bottom: 15px;
 }
 
-input{
+#code{
     text-align: center;
     border: 1px dashed gray;
-    height: 40px;
+    padding: 10px 0px;
     border-radius: 10px;
+    background-color: white;
 }
 
 #button{

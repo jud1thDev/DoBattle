@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="makeBattleSuccess.css" rel="stylesheet">
-  <title>Do Battle - 배틀 생성 완료</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="css/makeBattleSuccess.css" rel="stylesheet">
+    <script src="js/changePage.js"></script>
+    <title>Do Battle - 배틀 생성 완료</title>
 </head>
 <body>
-<h1>새로운 배틀 생성 완료</h1>
-<p>새로운 배틀 생성이 완료되었습니다!</p>
-<p>배틀 코드: <span th:text="${battleCode}"></span></p>
+<!--  <h1>새로운 배틀 생성 완료</h1>-->
+<!--  <p>새로운 배틀 생성이 완료되었습니다!</p>-->
+<!--  <p>배틀 코드: <span th:text="${battleCode}"></span></p>-->
+
+  <div id="top">
+      <div id="text">
+          새로운 배틀 생성이<br>
+          완료되었습니다!
+      </div>
+      <div>
+          <img src="/image/battle-make-success.svg">
+      </div>
+      <div id="about-code">
+          <div id="label">함께 배틀할 친구를 초대하세요!</div>
+          <div id="code" th:text="${battleCode}"></div>
+      </div>
+  </div>
+
+  <div id="button">
+      <button onclick = "changePage('main')">홈으로 돌아가기</button>
+  </div>
 </body>
 </html>

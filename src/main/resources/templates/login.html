@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="login.css" rel="stylesheet">
-  <script src="changePage.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
+  <script src="js/changePage.js"></script>
   <title>Do Battle - 로그인</title>
 </head>
 <body>
-<div id="logo">
-  <img th:src="@{/image/logo-orange.svg}">
-</div>
-<form action="/login" method="post" id="login">
-  <input type="text" name="identify" placeholder="아이디" required id="id">
-  <input type="password" name="password" placeholder="비밀번호" required id="pw">
-  <input type="submit" value="로그인" id="button">
-  <div onclick="changePage('signup')" id="signUp">회원가입</div>
-</form>
+  <div id="logo">
+    <img src="/image/logo-orange.svg">
+  </div>
+  <form action="/login" method="post" id="login">
+    <input type="text" name="identify" placeholder="아이디" required id="id">
+    <input type="password" name="password" placeholder="비밀번호" required id="pw">
+    <input type="submit" value="로그인" id="button">
+    <div onclick="changePage('signup')" id="signUp">회원가입</div>
+  </form>
 </body>
 </html>

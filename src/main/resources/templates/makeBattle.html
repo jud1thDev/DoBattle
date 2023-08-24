@@ -3,19 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="makeBattle.css" rel="stylesheet">
-  <script src="changePage.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="css/makeBattle.css" rel="stylesheet">
   <title>Do Battle - 배틀 생성</title>
 </head>
-
-    <div id="make-bottom">
-      <div id="fireImage">
-        <img th:src="@{/image/fire.svg}">
+<body>
+  <div id="make-top">
+    <div id="top-menubar">
+      <div id="menu">
+        <img src="/image/menu-yellow.svg" onclick = "changePage('menubar.html')">
       </div>
-      <form action="/makeBattle" method="post" id="getInform">
-      <!-- 필요한 입력 요소들을 추가 -->
+      <div id="logo">
+        <img src="/image/logo-yellow.svg">
+      </div>
+      <div id="nothing"></div>
+    </div>
+    <div id="make-start">
+      <b>김배틀</b>님의 <br>
+      새로운 배틀을 시작합니다.
+    </div>
+  </div>
+
+  <div id="make-bottom">
+    <div id="fireImage">
+      <img src="/image/fire.svg">
+    </div>
+    <form action="/makeBattle" method="post" id="getInform" >
       <input type="text" name="battleName" placeholder="배틀 이름" required id="make-battle-name">
-      <select name="battleCategory">
+      <select name="battleCategory" id="battle-categ" required>
         <option disabled selected>배틀 카테고리</option>
         <option value="study">공부</option>
         <option value="exercise">운동</option>
@@ -25,10 +40,8 @@
       </select>
       <input type="text" name="startDate" placeholder="시작일 (yyyy-mm-dd)" required>
       <input type="text" name="endDate" placeholder="종료일 (yyyy-mm-dd)" required>
-      <input type="submit" value="배틀 생성"> // changeJS 제거
+      <input type="submit" value="배틀 시작!" id="button">
     </form>
   </div>
 </body>
 </html>
-
-

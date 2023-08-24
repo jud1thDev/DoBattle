@@ -3,36 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="signup.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="css/signup.css" rel="stylesheet">
+  <script src="js/PWConfirm.js"></script>
+  <script src="js/signup.js"></script>  <!--지금은 사용안함-->
   <title>Do Battle - 회원가입</title>
 </head>
 <body>
   <div id="signup-top">
     <div id="menu">
-      <img th:src="@{/image/logo-orange.svg}">
+      <img src="/image/logo-orange.svg">
     </div>
   </div>
 
   <div id="signup-bottom">
     <div id="signup-write">회원가입</div>
-    <form id="getInform" action="/signup" method="post">
+    <form id="getInform" action="/signup" method="post" onsubmit="return PWConfirm();"> <!--true시 제출, false 미제출 코드!-->
       <input type="text" name="username" placeholder="사용 닉네임" required  id="battle-name">
       <input type="text" name="identify" placeholder="ID" required  id="battle-id">
       <input type="password" name="password" placeholder="PW" required  id="battle-pw">
       <input type="password" placeholder="PW 재확인" required  id="battle-pwre">
-      <!-- <div id="agree">
+      <div class="agree">
           <label>두 배틀의 이용 약관에 동의합니다.</label>
-          <input type="checkbox" id="agreecheck" required>
+          <input type="checkbox" class="agreecheck" required>
       </div>
-      <div id="agree">
+      <div class="agree">
           <label>두 배틀의 개인정보 이용 방침에 동의합니다.</label>
-          <input type="checkbox" id="agreecheck" required>
-      </div> -->
+          <input type="checkbox" class="agreecheck" required>
+      </div>
       <input type="submit" value="회원가입하기" id="button">
     </form>
 
-    <p th:if="${param.error}" class="error-message">이미 사용 중인 아이디입니다.</p>
-</div>
-
+<!--    <p th:if="${param.error}" class="error-message">이미 사용 중인 아이디입니다.</p>-->
+  </div>
 </body>
 </html>
