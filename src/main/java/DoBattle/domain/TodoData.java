@@ -15,6 +15,11 @@ public class TodoData {
     @Column(nullable = false)
     private String todoData;
 
+    @ManyToOne // battle과 tododata의 관계성
+    @JoinColumn(name = "battle_id")
+    private Battle battle;
+
+
     // getter setter
 
     public Long getId() {
@@ -39,5 +44,13 @@ public class TodoData {
 
     public void setTodoData(String todoData) {
         this.todoData = todoData;
+    }
+
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+    }
+
+    public Battle getBattle() {
+        return battle;
     }
 }

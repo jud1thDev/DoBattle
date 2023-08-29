@@ -97,24 +97,27 @@ public class BattleController {
     }
 
     @GetMapping("/battle")
-    public String showBattlePage(HttpSession session, HttpServletRequest request, Model model) {
+    public String showBattlePage(HttpServletRequest request, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
             String identify = currentUser.getIdentify();
+
+            String battleCode = request.getParameter("battleCode");
 
             List<Battle> joinedBattles = battleService.getJoinedBattles(identify);
             model.addAttribute("joinedBattles", joinedBattles);
 
             String todoData = request.getParameter("todoData");
 
-            battleService.saveTodoData(todoData, currentUser.getIdentify());
+            battleService.saveTodoData(todoData, battleCode, currentUser.getIdentify());
 
             return "battle";
         }
 
         return "redirect:/login";
     }
+
 
     @GetMapping("/doingBattleList")
     public String showMainPage(HttpSession session, Model model) {

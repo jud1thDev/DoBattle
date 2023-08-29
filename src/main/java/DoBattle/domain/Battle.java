@@ -2,6 +2,8 @@ package DoBattle.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Battle {
@@ -18,6 +20,10 @@ public class Battle {
     private String createUser;
     private String joinUser;
     private int currentParticipants; // 현재참여자
+
+    @OneToMany(mappedBy = "battle") // battle과 tododata의 관계성
+    private List<TodoData> todoDataList = new ArrayList<>();
+
 
     // Getter and Setter 메서드들
 

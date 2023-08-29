@@ -91,14 +91,19 @@ public class BattleService {
         return joinedBattles;
     }
 
-    public void saveTodoData(String todoDataValue, String identify) {
-        TodoData todoData = new TodoData();
+    public void saveTodoData(String todoDataValue, String battleCode, String identify) {
+        Battle battle = battleRepository.findByBattleCode(battleCode);
 
-        todoData.setTodoData(todoDataValue);
-        todoData.setUserIdentify(identify);
+        if (battle != null) {
+            TodoData todoData = new TodoData();
+            todoData.setTodoData(todoDataValue);
+            todoData.setUserIdentify(identify);
+            todoData.setBattle(battle);
 
-        todoDataRepository.save(todoData);
+            todoDataRepository.save(todoData);
+        }
     }
+
 
 
     public List<TodoData> getTodoDataForUser(String userIdentify) {
