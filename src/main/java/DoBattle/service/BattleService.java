@@ -112,9 +112,9 @@ public class BattleService {
     private String getUsernameByIdentify(String identify) {
         User user = userRepository.findByIdentify(identify);
         if (user != null) {
-            return user.getUsername();
+            return "vs " + user.getUsername();
         } else {
-            return "배틀 생성 오류";
+            return "";
         }
     }
 
