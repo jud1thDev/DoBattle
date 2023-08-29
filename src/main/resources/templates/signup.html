@@ -18,7 +18,7 @@
 
   <div id="signup-bottom">
     <div id="signup-write">회원가입</div>
-    <form id="getInform" action="/signup" method="post" onsubmit="return UsingID();"> <!--true시 제출, false 미제출 코드!-->
+    <form id="getInform" action="/signup" method="post" onsubmit="return PWConfirm()"> <!--true시 제출, false 미제출 코드!-->
       <input type="text" name="username" placeholder="사용 닉네임" required  id="battle-name">
       <input type="text" name="identify" placeholder="ID" required  id="battle-id">
       <input type="password" name="password" placeholder="PW" required  id="battle-pw">
@@ -37,4 +37,13 @@
 <!--    <p th:if="${param.error}" class="error-message">이미 사용 중인 아이디입니다. </p>-->
   </div>
 </body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let error = /*[[${param.error}]]*/;
+      if(error){
+          alert("이미 사용 중인 아이디입니다.");
+      }
+  /*]]>*/
+</script>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -132,6 +133,16 @@ public class BattleController {
         List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
         model.addAttribute("joinedBattles", joinedBattles);
 
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (Battle battle : joinedBattles) {
+            String partnerUsername = battleService.getUsernameBasedOnCondition(battle, currentUser.getIdentify());
+            partnerUsernames.add(partnerUsername);
+        }
+
+        model.addAttribute("partnerUsernames", partnerUsernames);
+
         return "doingBattleList";
     }
+
 }

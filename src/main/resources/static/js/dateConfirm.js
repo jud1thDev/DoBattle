@@ -1,15 +1,12 @@
 function dateConfirm(){
-    let today = new Date();
-    let Pickdate = document.getElementById("pickDate");
-    let pickedDate = new Date(Pickdate.value);
-    //let pickedDate = new Date("2023-01-08");
-    today = new Date(today.getFullYear(), today.getMonth(),today.getDate(),0,0);
-    pickedDate = new Date(pickedDate.getFullYear(), pickedDate.getMonth(), pickedDate.getDate(),0,0);
-    console.log(today);
-    console.log(pickedDate);
+    let startdate = document.getElementById("startDate");
+    let startedDate = new Date(startdate.value);
 
-    if(pickedDate < today){
-        alert("오늘 이전의 날짜는 선택할 수 없습니다.");
+    let finishdate = document.getElementById("finishDate");
+    let finishedDate = new Date(finishdate.value);
+
+    if(startedDate > finishedDate){
+        alert("시작날짜가 종료 날짜보다 빠릅니다.");
         return false;
     }
     return true;

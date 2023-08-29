@@ -70,3 +70,8 @@ function fireOrange(self){
         borderElements.style.borderBottom = "2px solid white";
     }
 }
+
+window.onload{
+
+}
+
