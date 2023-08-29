@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,10 +35,16 @@
             <input type="text" name="battleCode" id="code" placeholder="코드를 입력하세요" required>
         </div>
     </div>
+</form>
 
 
     <div id="button">
         <button onclick = "changePage('joinBattleSuccess')">배틀 참여하기!</button>
     </div>
+
+    <div th:if="${joinBattleError}" class="alert alert-danger">
+        <p th:text="${joinBattleError}"></p>
+    </div>
 </body>
+
 </html>

@@ -17,6 +17,7 @@ public class Battle {
     private String battleCode; // 난수코드
     private String createUser;
     private String joinUser;
+    private int currentParticipants; // 현재참여자
 
     // Getter and Setter 메서드들
 
@@ -83,4 +84,13 @@ public class Battle {
     public void setJoinUser(String joinUser) {
         this.joinUser = joinUser;
     }
+
+    public int getCurrentParticipants() {
+        return currentParticipants;
+    }
+
+    public void setCurrentParticipants(int currentParticipants) {
+        this.currentParticipants = currentParticipants;
+    }
+
 }

@@ -1,19 +1,18 @@
 package DoBattle.service;
 
 import DoBattle.domain.Battle;
-import DoBattle.domain.User;
 import DoBattle.repository.BattleRepository;
-import DoBattle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
 @Service
 public class BattleService {
+
+    private static final int MAX_CAPACITY = 2; // 최대 참가자 수 정의
 
     @Autowired
     private BattleRepository battleRepository;
@@ -56,15 +55,31 @@ public class BattleService {
         return battleCode;
     }
 
-    public Battle joinBattle(String battleCode, String identify) {
+    public joinBattleResult joinBattle(String battleCode, String identify) {
         Battle battle = battleRepository.findByBattleCode(battleCode);
 
-        if (battle != null && battle.getJoinUser() == null) {
-            battle.setJoinUser(identify);
-            return battleRepository.save(battle);
+        if (battle == null) {
+            return joinBattleResult.INVALID_CODE;
         }
 
-        return null;
+        if (identify.equals(battle.getCreateUser()) || identify.equals(battle.getJoinUser())) {
+            return joinBattleResult.ALREADY_JOINED;
+        }
+
+        if (isBattleFull(battle)) {
+            return joinBattleResult.BATTLE_FULL;
+        }
+
+        battle.setJoinUser(identify);
+        battle.setCurrentParticipants(battle.getCurrentParticipants() + 1);
+        battleRepository.save(battle);
+
+        return joinBattleResult.SUCCESS;
+    }
+
+    private boolean isBattleFull(Battle battle) {
+        List<Battle> joinedBattles = battleRepository.findByCreateUserOrJoinUser(battle.getCreateUser(), battle.getJoinUser());
+        return joinedBattles.size() >= MAX_CAPACITY;
     }
 
     public List<Battle> getJoinedBattles(String identify) {
@@ -72,3 +87,4 @@ public class BattleService {
         return joinedBattles;
     }
 }
+

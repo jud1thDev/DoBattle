@@ -3,6 +3,7 @@ package DoBattle.controller;
 import DoBattle.domain.Battle;
 import DoBattle.domain.User;
 import DoBattle.service.BattleService;
+import DoBattle.service.joinBattleResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,6 +71,7 @@ public class BattleController {
         return "redirect:/login";
     }
 
+
     @PostMapping("/joinBattle")
     public String joinBattle(@RequestParam String battleCode,
                              HttpSession session,
@@ -80,19 +82,24 @@ public class BattleController {
         if (currentUser != null) {
             String identify = currentUser.getIdentify();
 
-            Battle joinedBattle = battleService.joinBattle(battleCode, identify);
+            joinBattleResult result = battleService.joinBattle(battleCode, identify);
 
-            if (joinedBattle != null) {
-                model.addAttribute("joinedBattle", joinedBattle);
+            if (result == joinBattleResult.SUCCESS) {
                 return "joinBattleSuccess";
-            } else {
-                model.addAttribute("joinBattleError", "배틀 참여에 실패했습니다. 이미 참여된 배틀이거나 잘못된 코드일 수 있습니다.");
-                return "makeBattle";
+            } else if (result == joinBattleResult.ALREADY_JOINED) {
+                model.addAttribute("joinBattleError", "이미 참여 중인 배틀입니다.");
+            } else if (result == joinBattleResult.BATTLE_FULL) {
+                model.addAttribute("joinBattleError", "참가 정원이 가득찬 배틀입니다.");
+            } else if (result == joinBattleResult.INVALID_CODE) {
+                model.addAttribute("joinBattleError", "잘못된 배틀 코드입니다. 다시 입력하세요.");
             }
+
+            return "joinBattle";
         }
 
         return "redirect:/login";
     }
+
 
     @GetMapping("/battle")
     public String showBattlePage(HttpSession session, Model model) {
