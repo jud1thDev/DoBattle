@@ -2,8 +2,10 @@ package DoBattle.service;
 
 import DoBattle.domain.Battle;
 import DoBattle.domain.TodoData;
+import DoBattle.domain.User;
 import DoBattle.repository.BattleRepository;
 import DoBattle.repository.TodoDataRepository;
+import DoBattle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,13 @@ public class BattleService {
 
     @Autowired
     private BattleRepository battleRepository;
+    // 리포지토리 위에만 쓰는게 아니라 일케 주입도 해줘야함!!
 
     @Autowired
     private TodoDataRepository todoDataRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Battle createBattle(String battleName,
                                String battleCategory,
@@ -91,6 +97,29 @@ public class BattleService {
         return joinedBattles;
     }
 
+    // 배틀 상대 username 찾기(doingBattleList에서 필요)
+    public String getUsernameBasedOnCondition(Battle battle, String currentUserIdentify) {
+        String createUser = battle.getCreateUser();
+        String joinUser = battle.getJoinUser();
+
+        if (!createUser.equals(currentUserIdentify)) {
+            return getUsernameByIdentify(createUser);
+        } else {
+            return getUsernameByIdentify(joinUser);
+        }
+    }
+
+    private String getUsernameByIdentify(String identify) {
+        User user = userRepository.findByIdentify(identify);
+        if (user != null) {
+            return user.getUsername();
+        } else {
+            return "배틀 생성 오류";
+        }
+    }
+
+
+    // 투두리스트 저장부분
     public void saveTodoData(String todoDataValue, String battleCode, String identify) {
         Battle battle = battleRepository.findByBattleCode(battleCode);
 
@@ -103,8 +132,6 @@ public class BattleService {
             todoDataRepository.save(todoData);
         }
     }
-
-
 
     public List<TodoData> getTodoDataForUser(String userIdentify) {
         return todoDataRepository.findByUserIdentify(userIdentify);
