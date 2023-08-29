@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -22,15 +23,13 @@ public class BattleController {
 
     @GetMapping("/makeBattle")
     public String showMakeBattlePage(HttpSession session, Model model) {
-        // 현재 로그인된 유저의 정보를 세션에서 읽어옴(SpringConfig로 하는게 좋긴함..)
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
-            model.addAttribute("currentUser", currentUser);  // 사용자 정보를 모델에 추가
+            model.addAttribute("currentUser", currentUser);
             return "makeBattle";
         }
 
-        // 로그인 된 사용자가 없으면
         return "redirect:/login";
     }
 
@@ -42,7 +41,6 @@ public class BattleController {
                                HttpSession session,
                                Model model) {
 
-        // 현재 로그인된 유저의 정보를 세션에서 읽어옴(SpringConfig로 하는게 좋긴함..)
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
@@ -55,7 +53,6 @@ public class BattleController {
             return "makeBattleSuccess";
         }
 
-        // 로그인 된 사용자가 없으면
         return "redirect:/login";
     }
 
@@ -70,7 +67,6 @@ public class BattleController {
 
         return "redirect:/login";
     }
-
 
     @PostMapping("/joinBattle")
     public String joinBattle(@RequestParam String battleCode,
@@ -100,9 +96,8 @@ public class BattleController {
         return "redirect:/login";
     }
 
-
     @GetMapping("/battle")
-    public String showBattlePage(HttpSession session, Model model) {
+    public String showBattlePage(HttpSession session, HttpServletRequest request, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
@@ -110,7 +105,10 @@ public class BattleController {
 
             List<Battle> joinedBattles = battleService.getJoinedBattles(identify);
             model.addAttribute("joinedBattles", joinedBattles);
-            // joinedBattles는 createUser나 joinUser에 로그인된 유저와 동일한 identify가 존재해야함
+
+            String todoData = request.getParameter("todoData");
+
+            battleService.saveTodoData(todoData, currentUser.getIdentify());
 
             return "battle";
         }
@@ -123,16 +121,14 @@ public class BattleController {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser == null) {
-            return "redirect:/login"; // 없으면 로그인 페이지로 이동
+            return "redirect:/login";
         }
 
         model.addAttribute("currentUser", currentUser);
 
         List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
         model.addAttribute("joinedBattles", joinedBattles);
-        // joinedBattles는 createUser나 joinUser에 로그인된 유저와 동일한 identify가 존재해야함
 
         return "doingBattleList";
     }
-
 }

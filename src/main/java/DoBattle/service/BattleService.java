@@ -1,7 +1,9 @@
 package DoBattle.service;
 
 import DoBattle.domain.Battle;
+import DoBattle.domain.TodoData;
 import DoBattle.repository.BattleRepository;
+import DoBattle.repository.TodoDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class BattleService {
 
     @Autowired
     private BattleRepository battleRepository;
+
+    @Autowired
+    private TodoDataRepository todoDataRepository;
 
     public Battle createBattle(String battleName,
                                String battleCategory,
@@ -84,6 +89,20 @@ public class BattleService {
     public List<Battle> getJoinedBattles(String identify) {
         List<Battle> joinedBattles = battleRepository.findByCreateUserOrJoinUser(identify, identify);
         return joinedBattles;
+    }
+
+    public void saveTodoData(String todoDataValue, String identify) {
+        TodoData todoData = new TodoData();
+
+        todoData.setTodoData(todoDataValue);
+        todoData.setUserIdentify(identify);
+
+        todoDataRepository.save(todoData);
+    }
+
+
+    public List<TodoData> getTodoDataForUser(String userIdentify) {
+        return todoDataRepository.findByUserIdentify(userIdentify);
     }
 }
 
