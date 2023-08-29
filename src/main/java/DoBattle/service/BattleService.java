@@ -27,6 +27,7 @@ public class BattleService {
 
     @Autowired
     private UserRepository userRepository;
+    private Battle battleCode;
 
     public Battle createBattle(String battleName,
                                String battleCategory,

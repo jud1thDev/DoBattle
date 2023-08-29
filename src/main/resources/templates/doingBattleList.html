@@ -22,7 +22,7 @@
     </div>
 
     <div th:each="battle, index : ${joinedBattles}" id="main-bottom">
-        <div class="bottom-box" onclick="changePage('battle')">
+        <div class="bottom-box" th:onclick="'battlePage(\'' + ${battle.id} + '\')'">
             <div th:text="${battle.battleName}" class="battle-name"></div>
             <div th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}" class="battle-date"></div>
             <div class="versus" th:text="${partnerUsernames[__${index.index}__]}"></div>
