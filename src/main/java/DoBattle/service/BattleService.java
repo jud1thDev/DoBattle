@@ -78,8 +78,7 @@ public class BattleService {
     }
 
     private boolean isBattleFull(Battle battle) {
-        List<Battle> joinedBattles = battleRepository.findByCreateUserOrJoinUser(battle.getCreateUser(), battle.getJoinUser());
-        return joinedBattles.size() >= MAX_CAPACITY;
+        return battle.getCurrentParticipants() >= MAX_CAPACITY;
     }
 
     public List<Battle> getJoinedBattles(String identify) {

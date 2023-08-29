@@ -34,17 +34,14 @@
             <label for="code">초대코드를 입력하고<br>바로 배틀에 참여하세요!</label>
             <input type="text" name="battleCode" id="code" placeholder="코드를 입력하세요" required>
         </div>
+        <div id="button">
+            <button onclick = "changePage('joinBattleSuccess')">배틀 참여하기!</button>
+        </div>
     </div>
 </form>
 
-
-    <div id="button">
-        <button onclick = "changePage('joinBattleSuccess')">배틀 참여하기!</button>
-    </div>
-
-    <div th:if="${joinBattleError}" class="alert alert-danger">
-        <p th:text="${joinBattleError}"></p>
-    </div>
+<div th:if="${joinBattleError}" class="alert alert-danger">
+    <p th:text="${joinBattleError}"></p>
+</div>
 </body>
-
 </html>
