@@ -9,17 +9,17 @@
     <title>Do Battle - 진행중인 배틀들</title>
 </head>
 <body>
-    <div id="main-top">
-        <div id="top-menubar">
-            <div id="menu">
-                <img src="/image/menu-yellow.svg" onclick = "changePage('menu.html')">
-            </div>
-            <div id="top-write">
-                진행중인 배틀
-            </div>
-            <div id="nothing"></div>
+<div id="main-top">
+    <div id="top-menubar">
+        <div id="menu">
+            <img src="/image/menu-yellow.svg" onclick = "changePage('menu.html')">
         </div>
+        <div id="top-write">
+            진행중인 배틀
+        </div>
+        <div id="nothing"></div>
     </div>
+</div>
 
     <div th:each="battle, index : ${joinedBattles}" id="main-bottom">
         <div class="bottom-box" onclick="goToBattlePage('{{battle.battleCode}}')">
@@ -29,6 +29,13 @@
         </div>
     </div>
 
+<script>
+    let battleName = document.querySelector('.battle-name').textContent;
+    let battleStartDate = document.querySelector('.battle-date').textContent;
 
+    function goToBattlePage(battleCode) {
+        window.location.href = '/battle/detail?battleCode=' + battleCode;
+    }
+</script>
 </body>
 </html>
