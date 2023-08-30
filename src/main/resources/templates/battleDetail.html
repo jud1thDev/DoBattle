@@ -3,39 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>배틀 상세 정보</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="../css/battle.css" rel="stylesheet">
+  <script src="../js/changePage.js"></script>
+  <script src="../js/battle.js"></script>
+  <title>Do battle - 배틀</title>
 </head>
 <body>
-<div>
-  <h1 th:text="${battleName}"></h1>
-  <p>카테고리: <span th:text="${battleCategory}"></span></p>
-  <p>시작일: <span th:text="${startDate}"></span></p>
-  <p>종료일: <span th:text="${endDate}"></span></p>
-  <p>배틀 코드: <span th:text="${battleCode}"></span></p>
+
+<div id="real-top">
+  <div id="battle-top">
+    <div><img src="/image/arrow.svg" onclick = "changePage('../doingBattleList')"></div>
+    <div id="write">배틀 상세보기</div>
+    <div id="nothing"></div>
+  </div>
+
+  <div id="battle-detail">
+    <div>
+      <div id="detail-text">
+        <span th:text="${startDate}" id="date">xx.xx~xx.xx<br></span>
+        <span id="name">배틀 이름</span>
+      </div>
+      <div><img src="/image/small-fire.svg"></div>
+    </div>
+    <div><img src="/image/calendar.svg" onclick = "changePage('calender')"></div>
+  </div>
+
+  <div id="battle-progress">
+    <div id="me">
+      <div class="progress">
+        <div class="first">60%</div>
+        <img src="/image/progress-face-1.svg">
+      </div>
+      <p>김배틀</p>
+    </div>
+
+    <div id="vs">vs</div>
+
+    <div id="other">
+      <p>박상대</p>
+      <div class="progress">
+        <div class="first">26%</div>
+        <img src="/image/progress-face-2.svg">
+      </div>
+    </div>
+  </div>
+
+  <div id="text">김배틀님이 34% 차이로<br>앞서가고 있어요!</div>
 </div>
 
+<div id="battle-bottom">
+  <div id="todo-main">
+    <div>TO-DO</div>
+    <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
+  </div>
 
-<div id="battle-details">
-  <h1 id="battle-name"></h1>
-  <p id="battle-category"></p>
-  <p id="start-date"></p>
-  <p id="end-date"></p>
-  <p id="battle-code"></p>
+  <div id="1">
+    <div class="todo-list">오늘의 todo리스트입니다.</div>
+    <input type="button" class="fire-button" value="notDone" onclick = "fireOrange(1);">
+  </div>
 </div>
 
-<script th:inline="javascript">
-    // 서버로부터 받아온 정보를 사용하여 페이지 내용을 채우는 함수
-    function fillBattleDetails() {
-        var battleInfo = {
-            battleName: document.querySelector('[data-battle]').textContent,
-            battleCategory: document.querySelector('[data-category]').textContent,
-            startDate: document.querySelector('[data-start-date]').textContent,
-            endDate: document.querySelector('[data-end-date]').textContent,
-            battleCode: document.querySelector('[data-battle-code]').textContent
-        };
-    }
+<!--<script th:inline="javascript">-->
+<!--    // 서버로부터 받아온 정보를 사용하여 페이지 내용을 채우는 함수-->
+<!--    function fillBattleDetails() {-->
+<!--        var battleInfo = {-->
+<!--            battleName: document.querySelector('[data-battle]').textContent,-->
+<!--            battleCategory: document.querySelector('[data-category]').textContent,-->
+<!--            startDate: document.querySelector('[data-start-date]').textContent,-->
+<!--            endDate: document.querySelector('[data-end-date]').textContent,-->
+<!--            battleCode: document.querySelector('[data-battle-code]').textContent-->
+<!--        };-->
+<!--    }-->
 
-    fillBattleDetails(); // 페이지 로드 시 함수 호출
-</script>
+<!--    fillBattleDetails(); // 페이지 로드 시 함수 호출-->
+<!--</script>-->
 </body>
 </html>
