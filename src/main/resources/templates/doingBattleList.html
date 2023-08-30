@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="css/doingBattleList.css" rel="stylesheet">
-    <script src="js/doingBattleList.js"></script>
+<!--    <script src="js/doingBattleList.js"></script>-->
     <title>Do Battle - 진행중인 배틀들</title>
 </head>
 <body>
@@ -22,20 +22,19 @@
 </div>
 
     <div th:each="battle, index : ${joinedBattles}" id="main-bottom">
-        <div class="bottom-box" onclick="goToBattlePage('{{battle.battleCode}}')">
-            <div th:text="${battle.battleName}" class="battle-name"></div>
+        <div class="bottom-box" th:attr="data-battle-code=${battle.battleCode}" onclick="goToBattlePage(this)">
+        <div th:text="${battle.battleName}" class="battle-name"></div>
             <div th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}" class="battle-date"></div>
             <div class="versus" th:text="${partnerUsernames[__${index.index}__]}"></div>
         </div>
     </div>
 
-<script>
-    let battleName = document.querySelector('.battle-name').textContent;
-    let battleStartDate = document.querySelector('.battle-date').textContent;
+<script th:inline="javascript">
+function goToBattlePage(element) {
+    var battleCode = element.getAttribute('data-battle-code');
+    window.location.href = '/battle/detail?battleCode=' + battleCode;
+}
 
-    function goToBattlePage(battleCode) {
-        window.location.href = '/battle/detail?battleCode=' + battleCode;
-    }
 </script>
 </body>
 </html>
