@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -117,6 +118,22 @@ public class BattleService {
         } else {
             return "";
         }
+    }
+
+    public Battle getBattleByCode(String battleCode) {
+        return battleRepository.findByBattleCode(battleCode);
+    } // battle.html에 정보를 로드하기 위해 쓰임
+
+
+    public List<String> getPartnerUsernames(List<Battle> battles, String currentUserIdentify) {
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (Battle battle : battles) {
+            String partnerUsername = getUsernameBasedOnCondition(battle, currentUserIdentify);
+            partnerUsernames.add(partnerUsername);
+        }
+
+        return partnerUsernames;
     }
 
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배틀 상세 정보</title>
+</head>
+<body>
+<div id="battle-details">
+  <h1 id="battle-name"></h1>
+  <p id="battle-category"></p>
+  <p id="start-date"></p>
+  <p id="end-date"></p>
+  <p id="battle-code"></p>
+</div>
+
+<script>
+        // 서버로부터 받아온 정보를 사용하여 페이지 내용을 채우는 함수
+        function fillBattleDetails(battleInfo) {
+            document.getElementById('battle-name').textContent = battleInfo.battleName;
+            document.getElementById('battle-category').textContent = '카테고리: ' + battleInfo.battleCategory;
+            document.getElementById('start-date').textContent = '시작일: ' + battleInfo.startDate;
+            document.getElementById('end-date').textContent = '종료일: ' + battleInfo.endDate;
+            document.getElementById('battle-code').textContent = '배틀 코드: ' + battleInfo.battleCode;
+        }
+    </script>
+</body>
+</html>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -97,29 +98,6 @@ public class BattleController {
         return "redirect:/login";
     }
 
-    @GetMapping("/battle")
-    public String showBattlePage(HttpServletRequest request, HttpSession session, Model model) {
-        User currentUser = (User) session.getAttribute("currentUser");
-
-        if (currentUser != null) {
-            String identify = currentUser.getIdentify();
-
-            String battleCode = request.getParameter("battleCode");
-
-            List<Battle> joinedBattles = battleService.getJoinedBattles(identify);
-            model.addAttribute("joinedBattles", joinedBattles);
-
-            String todoData = request.getParameter("todoData");
-
-            battleService.saveTodoData(todoData, battleCode, currentUser.getIdentify());
-
-            return "battle";
-        }
-
-        return "redirect:/login";
-    }
-
-
     @GetMapping("/doingBattleList")
     public String showMainPage(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
@@ -133,16 +111,29 @@ public class BattleController {
         List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
         model.addAttribute("joinedBattles", joinedBattles);
 
-        List<String> partnerUsernames = new ArrayList<>();
-
-        for (Battle battle : joinedBattles) {
-            String partnerUsername = battleService.getUsernameBasedOnCondition(battle, currentUser.getIdentify());
-            partnerUsernames.add(partnerUsername);
-        }
-
+        List<String> partnerUsernames = battleService.getPartnerUsernames(joinedBattles, currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         return "doingBattleList";
     }
+
+    @GetMapping("/battle/detail")
+    public String showBattleDetail(@RequestParam String battleCode, HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        Battle battle = battleService.getBattleByCode(battleCode);
+
+        model.addAttribute("battleName", battle.getBattleName());
+        model.addAttribute("battleCategory", battle.getBattleCategory());
+        model.addAttribute("startDate", battle.getStartDate());
+        model.addAttribute("endDate", battle.getEndDate());
+        model.addAttribute("battleCode", battle.getBattleCode());
+
+        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        model.addAttribute("partnerUsernames", partnerUsernames);
+
+        return "battleDetail";
+    }
+
 
 }
