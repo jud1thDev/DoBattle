@@ -20,8 +20,8 @@
 
     <div id="battle-detail">
         <div>
-            <div th:text="${battle.battleName}" id="detail-text">
-                <span th:text="${battle.startDate} + ' ~ ' + ${battle.endDate}" id="date"><br></span>
+            <div id="detail-text">
+                <span id="date"><br></span>
                 <span id="name"></span>
             </div>
             <div><img src="/image/small-fire.svg"></div>
@@ -35,13 +35,13 @@
                 <div class="first">60%</div>
                 <img src="/image/progress-face-1.svg">
             </div>
-            <p th:text="${currentUser.username}"></p>
+            <p></p>
         </div>
 
         <div id="vs">vs</div>
 
         <div id="other">
-            <p th:text="${partnerUsernames}"></p>
+            <p></p>
             <div class="progress">
                 <div class="first">26%</div>
                 <img src="/image/progress-face-2.svg">
@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <div id="text">김배틀님이 34% 차이로<br>앞서가고 있어요!</div>
+    <div id="text"></div>
 </div>
 
 <div id="battle-bottom">
@@ -63,14 +63,27 @@
         <input type="button" class="fire-button" value="notDone" onclick = "fireOrange(1);">
     </div>
 </div>
-</body>
 
-<style th:inline="javascript">
-    /*<![CDATA[*/
-    function persent(){
-        let whoWin = document.getElementById(text);
-        whoWin.
-    }
-    /*]]>*/
-</style>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const battleInfoJSON = localStorage.getItem("battleInfo");
+        if (battleInfoJSON) {
+            const battleInfo = JSON.parse(battleInfoJSON);
+            window.battleId = battleInfo.battleId;  //전역변수 지정
+            const battleName = battleInfo.battleName;
+            const battleDate = battleInfo.battleDate;
+            const battlePartner = battleInfo.battlePartner;
+
+            document.getElementById("name").textContent = battleName;
+            document.getElementById("date").textContent = battleDate
+            document.querySelector('#me > p').textContent = '이름변수';             //내일 지정
+            document.querySelector('#other > p').textContent = battlePartner;
+            document.getElementById("text").innerHTML = battlePartner + '님이 ' + '34'+ '% 차이로<br> 앞서가고 있어요!';
+
+            // 작업이 끝난 후에는 localStorage에서 해당 데이터 삭제
+            localStorage.removeItem("battleInfo");
+        }
+    });
+</script>
+</body>
 </html>

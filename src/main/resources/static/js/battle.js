@@ -46,10 +46,16 @@ function todoClick(){
                 hiddenInput.name = "todoData"; // 백엔드에서 사용!!!!!!!!!!
                 hiddenInput.value = todo;
 
+                let hiddenBattleId = document.createElement("input");
+                hiddenBattleId.type = "hidden";   //배틀 id 전달용
+                hiddenBattleId.name = "battleId";
+                hiddenBattleId.value = battleId;
+
                 battleBottom.appendChild(newDiv2);
                 newDiv2.appendChild(todoList);
                 newDiv2.appendChild(fireImg);
                 newDiv2.appendChild(hiddenInput);
+                newDiv2.appendChild(hiddenBattleId);
 
                 todoNum ++;
                 txtFieldNum--;
