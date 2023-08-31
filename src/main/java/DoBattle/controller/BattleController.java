@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -117,8 +118,10 @@ public class BattleController {
         return "doingBattleList";
     }
 
-    @GetMapping("/battle/detail")
-    public String showBattleDetail(@RequestParam String battleCode, HttpSession session, Model model) {
+    @GetMapping ("/battle/detail")
+    public String showBattleDetail(@RequestParam String battleCode,
+                                   HttpSession session,
+                                   Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         Battle battle = battleService.getBattleByCode(battleCode);
@@ -131,6 +134,32 @@ public class BattleController {
 
         List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
+
+        return "battleDetail";
+    }
+
+    @PostMapping ("/battle/detail")
+    public String showBattleDetail2(@RequestParam String battleCode,
+                                   @RequestParam String todoDataValue,
+                                   @RequestParam String value,
+                                   HttpSession session,
+                                   Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        Battle battle = battleService.getBattleByCode(battleCode);
+
+        model.addAttribute("battleName", battle.getBattleName());
+        model.addAttribute("battleCategory", battle.getBattleCategory());
+        model.addAttribute("startDate", battle.getStartDate());
+        model.addAttribute("endDate", battle.getEndDate());
+        model.addAttribute("battleCode", battle.getBattleCode());
+
+        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        model.addAttribute("partnerUsernames", partnerUsernames);
+
+        // todoDataValue와 value도 모델에 추가
+        model.addAttribute("todoDataValue", todoDataValue);
+        model.addAttribute("value", value);
 
         return "battleDetail";
     }

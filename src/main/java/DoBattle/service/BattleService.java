@@ -122,7 +122,7 @@ public class BattleService {
 
     public Battle getBattleByCode(String battleCode) {
         return battleRepository.findByBattleCode(battleCode);
-    } // battle.html에 정보를 로드하기 위해 쓰임
+    } // battledetail.html에 정보를 로드하기 위해 쓰임
 
 
     public List<String> getPartnerUsernames(List<Battle> battles, String currentUserIdentify) {
@@ -137,22 +137,5 @@ public class BattleService {
     }
 
 
-    // 투두리스트 저장부분
-    public void saveTodoData(String todoDataValue, String battleCode, String identify) {
-        Battle battle = battleRepository.findByBattleCode(battleCode);
-
-        if (battle != null) {
-            TodoData todoData = new TodoData();
-            todoData.setTodoData(todoDataValue);
-            todoData.setUserIdentify(identify);
-            todoData.setBattle(battle);
-
-            todoDataRepository.save(todoData);
-        }
-    }
-
-    public List<TodoData> getTodoDataForUser(String userIdentify) {
-        return todoDataRepository.findByUserIdentify(userIdentify);
-    }
 }
 

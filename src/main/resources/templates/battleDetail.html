@@ -58,25 +58,19 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <div id="1">
-    <div class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="button" class="fire-button" value="notDone" onclick = "fireOrange(1);">
-  </div>
+  <form id="todo-form" action="/battle/saveTodoData" method="post">
+    <div id="1" class="todo-item">
+      <div class="todo-list">오늘의 todo리스트입니다.</div>
+      <input type="button" class="fire-button" value="notDone" onclick="fireOrange('1');">
+    </div>
+    <input type="hidden" name="battleCode" id="battleCode">
+    <input type="hidden" name="todoData" id="todoData">
+    <input type="hidden" name="value" id="value">
+    <input type="submit" value="저장">
+  </form>
+
+
 </div>
 
-<!--<script th:inline="javascript">-->
-<!--    // 서버로부터 받아온 정보를 사용하여 페이지 내용을 채우는 함수-->
-<!--    function fillBattleDetails() {-->
-<!--        var battleInfo = {-->
-<!--            battleName: document.querySelector('[data-battle]').textContent,-->
-<!--            battleCategory: document.querySelector('[data-category]').textContent,-->
-<!--            startDate: document.querySelector('[data-start-date]').textContent,-->
-<!--            endDate: document.querySelector('[data-end-date]').textContent,-->
-<!--            battleCode: document.querySelector('[data-battle-code]').textContent-->
-<!--        };-->
-<!--    }-->
-
-<!--    fillBattleDetails(); // 페이지 로드 시 함수 호출-->
-<!--</script>-->
 </body>
 </html>
