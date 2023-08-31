@@ -137,22 +137,5 @@ public class BattleService {
     }
 
 
-    // 투두리스트 저장부분
-    public void saveTodoData(String todoDataValue, String battleCode, String identify) {
-        Battle battle = battleRepository.findByBattleCode(battleCode);
-
-        if (battle != null) {
-            TodoData todoData = new TodoData();
-            todoData.setTodoData(todoDataValue);
-            todoData.setUserIdentify(identify);
-            todoData.setBattle(battle);
-
-            todoDataRepository.save(todoData);
-        }
-    }
-
-    public List<TodoData> getTodoDataForUser(String userIdentify) {
-        return todoDataRepository.findByUserIdentify(userIdentify);
-    }
 }
 
