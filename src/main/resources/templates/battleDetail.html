@@ -58,17 +58,13 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <form id="todo-form" action="/battle/saveTodoData" method="post">
-    <div id="1" class="todo-item">
-      <div class="todo-list">오늘의 todo리스트입니다.</div>
-      <input type="button" class="fire-button" value="notDone" onclick="fireOrange('1');">
-    </div>
-    <input type="hidden" name="battleCode" id="battleCode">
-    <input type="hidden" name="todoData" id="todoData">
-    <input type="hidden" name="value" id="value">
-    <input type="submit" value="저장">
+  <form id="3" action="/battle/saveTodoData" method="post">
+    <div class="todo-list">오늘의 todo리스트입니다.</div>
+    <input type="submit" class="fire-button" value="notDone">
+    <input type="hidden" name="battleCode" id="battleCode" value="배틀 코드 값">
+    <input type="hidden" name="todoDataValue" id="todoData" value="내용">
+    <input type="hidden" name="value" id="value" value="done">
   </form>
-
 
 </div>
 
