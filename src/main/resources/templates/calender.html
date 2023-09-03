@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id="top-menu">
-    <div><img src="/image/arrow.svg" onclick = "changePage('battle')"></div>
+    <div><img src="/image/arrow.svg" onclick = "goToBattlePage(this)"></div>
     <div id="write">배틀 상세보기</div>
     <div id="nothing"></div>
 </div>
@@ -52,4 +52,32 @@
     </div>
 </div>
 </body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let start = /*[[${startDate}]]*/;
+    let end = /*[[${endDate}]]*/;
+     /*]]>*/
+
+function goToBattlePage(element) {
+    var battleCode = /*[[${battleCode}]]*/;
+    window.location.href = '/battle/detail?battleCode=' + battleCode;
+  }
+
+function changeDate(date){
+    let getWithId = document.getElementById(String(date));
+    let realDay = getWithId.innerText;
+    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + realDay;
+
+    //클릭한 요일 풀로 저장용
+    let clickedDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), date);
+    let inside = document.querySelectorAll('.battle-result > div')[1];
+    if(today <= clickedDate){
+        inside.style.display = 'none';
+    }
+    else{
+        inside.style.display = 'flex';
+    }
+}
+</script>
 </html>
