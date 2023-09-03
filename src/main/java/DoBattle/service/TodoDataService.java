@@ -38,13 +38,20 @@ public class TodoDataService {
 
             todoDataRepository.save(todo);
 
-            // completedCount와 incompletedCount를 업데이트
-            updateCountsForBattle(battle);
+/*            //completedCount와 incompletedCount를 업데이트
+            updateCountsForBattle(battle);*/
+
         }
     }
 
+    public List<TodoData> getTodoDataByBattle(Battle battle) {
+        String battleCode = battle.getBattleCode();
+        List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battleCode);
+        return todoDataList;
+    }
+}
 
-    public void updateCountsForBattle(Battle battle) {
+/*    public void updateCountsForBattle(Battle battle) {
         if (battle != null) {
             List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battle.getBattleCode());
 
@@ -63,12 +70,6 @@ public class TodoDataService {
             battle.setIncompletedCount(incompletedCount);
             battleRepository.save(battle);
         }
-    }
+    }*/
 
-    public List<TodoData> getTodoDataByBattle(Battle battle) {
-        String battleCode = battle.getBattleCode();
-        List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battleCode);
-        return todoDataList;
-    }
 
-}
