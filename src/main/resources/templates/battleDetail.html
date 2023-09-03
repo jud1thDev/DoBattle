@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
   <link href="../css/battle.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
   <script src="../js/battle.js"></script>
   <title>Do battle - 배틀</title>
@@ -21,12 +22,12 @@
   <div id="battle-detail">
     <div>
       <div id="detail-text">
-        <span th:text="${startDate}" id="date">xx.xx~xx.xx<br></span>
-        <span id="name">배틀 이름</span>
+        <span id="date">xx.xx~xx.xx<br></span>
+        <span th:text="${battleName}" id="name">배틀 이름</span>
       </div>
       <div><img src="/image/small-fire.svg"></div>
     </div>
-    <div><img src="/image/calendar.svg" onclick = "changePage('calender')"></div>
+    <div><img src="/image/calendar.svg" onclick="goToBattlePage(this)"></div>
   </div>
 
   <div id="battle-progress">
@@ -35,13 +36,13 @@
         <div class="first">60%</div>
         <img src="/image/progress-face-1.svg">
       </div>
-      <p>김배틀</p>
+      <p th:text="${currentUser.username}">김배틀</p>
     </div>
 
     <div id="vs">vs</div>
 
     <div id="other">
-      <p>박상대</p>
+      <p th:text="${partnerUsernames}">박상대</p>  <!--username-->
       <div class="progress">
         <div class="first">26%</div>
         <img src="/image/progress-face-2.svg">
@@ -58,15 +59,34 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <form id="3" action="/battle/saveTodoData" method="post">
+  <form id="3" th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">
     <div class="todo-list">오늘의 todo리스트입니다.</div>
     <input type="submit" class="fire-button" value="notDone">
-    <input type="hidden" name="battleCode" id="battleCode" value="배틀 코드 값">
-    <input type="hidden" name="todoDataValue" id="todoData" value="내용">
+    <input type="hidden" name="todoDataValue" id="todoDataValue" value="내용">
     <input type="hidden" name="value" id="value" value="done">
   </form>
 
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let start = /*[[${startDate}]]*/;
+    var splitStart = start.split('-');
+    let startDate = splitStart[1] + '.' + splitStart[2];
+
+    let end = /*[[${endDate}]]*/;
+    var splitEnd = end.split('-');
+    let endDate = splitEnd[1] + '.' + splitEnd[2];
+
+    document.querySelector('#date').innerText = startDate + '~' +endDate;
+  /*]]>*/
+
+
+  function goToBattlePage(element) {
+    var battleCode = /*[[${battleCode}]]*/;
+    window.location.href = '/calender/detail?battleCode=' + battleCode;
+  }
+</script>
 
 </body>
 </html>

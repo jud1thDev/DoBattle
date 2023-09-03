@@ -2,11 +2,13 @@ package DoBattle.service;
 
 import DoBattle.domain.Battle;
 import DoBattle.domain.TodoData;
+import DoBattle.domain.User;
 import DoBattle.repository.BattleRepository;
 import DoBattle.repository.TodoDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -22,28 +24,44 @@ public class TodoDataService {
         return todoDataRepository.findByUserIdentify(userIdentify);
     }
 
-    public void saveTodoData(String battleCode, String todoDataValue, String value) {
-        Battle battle = battleRepository.findByBattleCode(battleCode);
+    public void saveTodoData(Battle battle, String todoDataValue, String value, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
 
-        if (battle != null) {
+        if (currentUser != null) {
+            String currentUserIdentify = currentUser.getIdentify();
+
             TodoData todo = new TodoData();
             todo.setBattle(battle);
-            todo.setUserIdentify(battle.getCreateUser());
+            todo.setUserIdentify(currentUserIdentify);
             todo.setTodoDataValue(todoDataValue);
             todo.setValue(value);
 
-            // value(notDone or Done)값에 따라 개수세기
-            if ("done".equals(value)) {
-                todo.setCompletedCount(todo.getCompletedCount() + 1);
-            } else {
-                todo.setIncompletedCount(todo.getIncompletedCount() + 1);
-            }
-
             todoDataRepository.save(todo);
-        } else {
-            System.out.println("올바른 배틀코드를 입력하세요");
+
+            // completedCount와 incompletedCount를 업데이트
+            updateCountsForBattle(battle);
         }
     }
 
-}
 
+    public void updateCountsForBattle(Battle battle) {
+        if (battle != null) {
+            List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battle.getBattleCode());
+
+            int completedCount = 0;
+            int incompletedCount = 0;
+
+            for (TodoData todo : todoDataList) {
+                if ("done".equals(todo.getValue())) {
+                    completedCount++;
+                } else {
+                    incompletedCount++;
+                }
+            }
+
+            battle.setCompletedCount(completedCount);
+            battle.setIncompletedCount(incompletedCount);
+            battleRepository.save(battle);
+        }
+    }
+}

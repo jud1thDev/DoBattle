@@ -126,6 +126,7 @@ public class BattleController {
 
         Battle battle = battleService.getBattleByCode(battleCode);
 
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("battleName", battle.getBattleName());
         model.addAttribute("battleCategory", battle.getBattleCategory());
         model.addAttribute("startDate", battle.getStartDate());
@@ -147,15 +148,6 @@ public class BattleController {
         User currentUser = (User) session.getAttribute("currentUser");
 
         Battle battle = battleService.getBattleByCode(battleCode);
-
-        model.addAttribute("battleName", battle.getBattleName());
-        model.addAttribute("battleCategory", battle.getBattleCategory());
-        model.addAttribute("startDate", battle.getStartDate());
-        model.addAttribute("endDate", battle.getEndDate());
-        model.addAttribute("battleCode", battle.getBattleCode());
-
-        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
-        model.addAttribute("partnerUsernames", partnerUsernames);
 
         // todoDataValue와 value도 모델에 추가
         model.addAttribute("todoDataValue", todoDataValue);

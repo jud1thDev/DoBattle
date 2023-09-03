@@ -18,9 +18,6 @@ public class TodoData {
     @Column(nullable = false)
     private String value;
 
-    private int completedCount; // 완료된 횟수
-    private int incompletedCount; // 미완료된 횟수
-
     @ManyToOne // battle과 tododata의 관계성
     @JoinColumn(name = "battle_id")
     private Battle battle;
@@ -67,20 +64,4 @@ public class TodoData {
         this.battle = battle;
     }
 
-    public int getCompletedCount() {
-        return completedCount;
-    }
-
-    public void setCompletedCount(int completedCount) {
-        this.completedCount = completedCount;
-    }
-
-    public int getIncompletedCount() {
-        return incompletedCount;
-    }
-
-    public void setIncompletedCount(int incompletedCount) {
-        this.incompletedCount = incompletedCount;
-    }
 }
-

@@ -41,9 +41,9 @@ function buildCalendar(){
         let imgElement = document.createElement("img");
         //오늘 이후는 투명도 70%
         if(today >= nowDay){
-            imgElement.src = "image/cal-fire-white.svg";
+            imgElement.src = "/image/cal-fire-white.svg";
         } else{
-            imgElement.src = "image/cal-fire-white70.svg";
+            imgElement.src = "/image/cal-fire-white70.svg";
         }
         newDivFire.appendChild(imgElement);
         nowColumn.appendChild(newDivFire);
