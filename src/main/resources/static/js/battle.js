@@ -1,14 +1,14 @@
-let todoNum = 2; // 몇 번째 todo인지 class명 저장용
+let todoNum = document.querySelectorAll('#battle-bottom > form').length;    //몇번째 todo인지 class명 저장용
 let txtFieldNum = 0; // 줄줄이 투두 수정용
 let clicked = 0; // 단순 투두 몇 개 끝냄?
 let percent = 0;
 
 function todoClick() {
   while (txtFieldNum === 0) {
-    let todo;
+    let todo;   //입력한 문구 저장용
     let battleBottom = document.getElementById("battle-bottom");
 
-    let newDiv = document.createElement("div"); // 전체 감쌀 div
+    let newDiv = document.createElement("form"); // 전체 감쌀 div
     let newText = document.createElement("input");
     newText.type = "text";
     newText.className = "input-text";

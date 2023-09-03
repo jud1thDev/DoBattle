@@ -59,17 +59,28 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <form id="3" th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">
-    <div class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="submit" class="fire-button" value="notDone">
-    <input type="hidden" name="todoDataValue" id="todoDataValue" value="내용">
-    <input type="hidden" name="value" id="value" value="done">
-    <!-- 추가한 부분 -->
-    <h2>Todo List</h2>
-    <ul>
-      <li th:each="todoData : ${todoDataList}" th:text="${todoData.todoDataValue}"></li>
-    </ul>
+  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post" th:each="todoDate : ${todoDataList}">
+    <div th:text="${todoDate.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
+    <input type="submit" class="fire-button" th:value="${todoDate.value}">
+    <input type="hidden" name="todoDataValue" class="todoDataValue" th:value="${todoDate.todoDataValue}">
   </form>
+
+
+  <!-- 추가한 부분 -->
+<!--  <h2>Todo List</h2>-->
+<!--  <ul>-->
+<!--    <li th:each="todoData : ${todoDataList}" th:text="${todoData.todoDataValue}"></li>-->
+<!--  </ul>-->
+<!--  </form>-->
+
+
+  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">
+    <div class="todo-list">오늘의 todo리스트입니다.</div>
+    <input type="submit" name="value" class="fire-button" value="notDone">
+    <input type="hidden" name="todoDataValue" class="todoDataValue" value="내용">
+<!--    <input type="hidden" name="percentage" id="">-->
+  </form>
+
 
 </div>
 
@@ -91,6 +102,23 @@
     var battleCode = /*[[${battleCode}]]*/;
     window.location.href = '/calender/detail?battleCode=' + battleCode;
   }
+
+<!--  function todoClick(){-->
+<!--    while(txtFieldNum === 0){-->
+<!--      let todo; //입력한 문구 저장용-->
+<!--      let battleBottom = document.getElementById("battle-bottom");-->
+
+<!--      battleBottom.innerHTML = `-->
+<!--        <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">-->
+<!--          <input type="text" class="input-text" placeholder="입력">오늘의 투두리스트입니다.</div>-->
+<!--        </form>-->
+<!--      `-->
+
+<!--      txtFieldNum++;-->
+
+<!--      let newText = document.querySelector('input');-->
+<!--    }-->
+
 </script>
 
 </body>
