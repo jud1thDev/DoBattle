@@ -64,6 +64,11 @@
     <input type="submit" class="fire-button" value="notDone">
     <input type="hidden" name="todoDataValue" id="todoDataValue" value="내용">
     <input type="hidden" name="value" id="value" value="done">
+    <!-- 추가한 부분 -->
+    <h2>Todo List</h2>
+    <ul>
+      <li th:each="todoData : ${todoDataList}" th:text="${todoData.todoDataValue}"></li>
+    </ul>
   </form>
 
 </div>

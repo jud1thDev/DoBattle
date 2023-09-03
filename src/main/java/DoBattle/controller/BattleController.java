@@ -1,20 +1,19 @@
 package DoBattle.controller;
 
 import DoBattle.domain.Battle;
+import DoBattle.domain.TodoData;
 import DoBattle.domain.User;
 import DoBattle.service.BattleService;
+import DoBattle.service.TodoDataService;
 import DoBattle.service.joinBattleResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +22,9 @@ public class BattleController {
 
     @Autowired
     private BattleService battleService;
+
+    @Autowired
+    private TodoDataService todoDataService;
 
     @GetMapping("/makeBattle")
     public String showMakeBattlePage(HttpSession session, Model model) {
@@ -118,7 +120,7 @@ public class BattleController {
         return "doingBattleList";
     }
 
-    @GetMapping ("/battle/detail")
+    @GetMapping("/battle/detail")
     public String showBattleDetail(@RequestParam String battleCode,
                                    HttpSession session,
                                    Model model) {
@@ -133,28 +135,44 @@ public class BattleController {
         model.addAttribute("endDate", battle.getEndDate());
         model.addAttribute("battleCode", battle.getBattleCode());
 
+        // TodoData를 불러오는 로직 추가
+        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
+        model.addAttribute("todoDataList", todoDataList);
+
         List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         return "battleDetail";
     }
 
+
     @PostMapping ("/battle/detail")
     public String showBattleDetail2(@RequestParam String battleCode,
-                                   @RequestParam String todoDataValue,
-                                   @RequestParam String value,
-                                   HttpSession session,
-                                   Model model) {
+                                    @RequestParam String todoDataValue,
+                                    @RequestParam String value,
+                                    HttpSession session,
+                                    Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         Battle battle = battleService.getBattleByCode(battleCode);
 
         // todoDataValue와 value도 모델에 추가
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("battleName", battle.getBattleName());
+        model.addAttribute("battleCategory", battle.getBattleCategory());
+        model.addAttribute("startDate", battle.getStartDate());
+        model.addAttribute("endDate", battle.getEndDate());
+        model.addAttribute("battleCode", battle.getBattleCode());
+
+        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        model.addAttribute("partnerUsernames", partnerUsernames);
+
         model.addAttribute("todoDataValue", todoDataValue);
         model.addAttribute("value", value);
 
         return "battleDetail";
     }
+
 
 
 }

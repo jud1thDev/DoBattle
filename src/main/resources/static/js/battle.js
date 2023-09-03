@@ -93,7 +93,7 @@ function fireOrange(num) {
 
 function saveTodoData() {
   var battleCode = document.getElementById("battleCode").value;
-  var todoDataValue = document.getElementById("todoData").value;
+  var todoDataValue = document.getElementById("todoDataValue").value;
   var value = document.getElementById("value").value;
 
   $.ajax({

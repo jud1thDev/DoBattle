@@ -64,4 +64,11 @@ public class TodoDataService {
             battleRepository.save(battle);
         }
     }
+
+    public List<TodoData> getTodoDataByBattle(Battle battle) {
+        String battleCode = battle.getBattleCode();
+        List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battleCode);
+        return todoDataList;
+    }
+
 }
