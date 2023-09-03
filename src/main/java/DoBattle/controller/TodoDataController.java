@@ -20,21 +20,21 @@ public class TodoDataController {
     @Autowired
     private BattleRepository battleRepository;
 
-    @PostMapping("/battle/{battleCode}/saveTodoData")
-    public ResponseEntity<?> saveTodoData(@PathVariable String battleCode,
-                                          @RequestParam String todoDataValue,
-                                          @RequestParam String value,
-                                          HttpSession session) {
+    @PostMapping("/battle/{battleCode}/saveTodoData") // 경로 변수로 battleCode 받음
+    public RedirectView saveTodoData(@PathVariable String battleCode,
+                                     @RequestParam String todoDataValue,
+                                     @RequestParam String value,
+                                     RedirectAttributes redirectAttributes,
+                                     HttpSession session) {
+
         Battle battle = battleRepository.findByBattleCode(battleCode);
-
-        if (battle != null) {
-            todoDataService.saveTodoData(battle, todoDataValue, value, session);
-            String redirectUrl = "/battle/detail?battleCode=" + battleCode;
-
-            return ResponseEntity.ok().body("{\"redirectUrl\":\"" + redirectUrl + "\"}");
-        } else {
-            return ResponseEntity.badRequest().body("올바른 배틀 코드를 입력하세요.");
-        }
+        todoDataService.saveTodoData(battle, todoDataValue, value, session);
+        // 리다이렉션할 URL을 설정합니다.
+        String redirectUrl = "/battle/detail?battleCode=" + battleCode;
+        // 리다이렉션할 URL을 RedirectAttributes에 추가합니다.
+        redirectAttributes.addAttribute("redirectUrl", redirectUrl);
+        // RedirectView를 반환하여 리다이렉션을 수행합니다.
+        return new RedirectView(redirectUrl); // 이 URL은 실제로는 없어도 됩니다.
     }
 
 }
