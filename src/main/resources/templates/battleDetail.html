@@ -7,7 +7,7 @@
   <link href="../css/battle.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
-  <script src="../js/battle.js"></script>
+<!--  <script src="../js/battle.js"></script>-->
   <title>Do battle - 배틀</title>
 </head>
 <body>
@@ -61,7 +61,7 @@
 
   <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post" th:each="todoDate : ${todoDataList}">
     <div th:text="${todoDate.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="submit" class="fire-button" th:value="${todoDate.value}">
+    <input type="submit" name="value" class="fire-button" th:value="${todoDate.value}">
     <input type="hidden" name="todoDataValue" class="todoDataValue" th:value="${todoDate.todoDataValue}">
   </form>
 
@@ -74,13 +74,13 @@
 <!--  </form>-->
 
 
-  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">
-    <div class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="submit" name="value" class="fire-button" value="notDone">
-    <input type="hidden" name="todoDataValue" class="todoDataValue" value="내용">
+<!--  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">-->
+<!--    <div class="todo-list">오늘의 todo리스트입니다.</div>-->
+<!--    <input type="submit" name="value" class="fire-button" value="notDone">-->
+<!--    <input type="hidden" name="todoDataValue" class="todoDataValue" value="내용">-->
 <!--    <input type="hidden" name="percentage" id="">-->
-  </form>
-
+<!--  </form>-->
+  <script src="../js/battle.js"></script>
 
 </div>
 

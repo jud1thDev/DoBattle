@@ -3,6 +3,23 @@ let txtFieldNum = 0; // 줄줄이 투두 수정용
 let clicked = 0; // 단순 투두 몇 개 끝냄?
 let percent = 0;
 
+window.onload = function() {
+    changeFireColor();
+    console.log("나와라");
+}
+
+function changeFireColor(){
+    let fireValue = document.querySelectorAll('.fire-button');
+    for(let i=0; i<fireValue.length; i++){
+        if(fireValue[i].value === 'done'){    //todo 실행 취소
+            fireValue[i].value = "notDone";
+            fireValue[i].style.backgroundImage = "url('../image/cal-fire-orange.svg')";
+            let form = fireValue[i].closest('form');
+
+        }
+    }
+}
+
 function todoClick() {
   while (txtFieldNum === 0) {
     let todo;   //입력한 문구 저장용
