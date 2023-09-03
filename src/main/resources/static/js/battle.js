@@ -15,7 +15,6 @@ function changeFireColor(){
     let fireValue = document.querySelectorAll('.fire-button');
     for(let i=0; i<fireValue.length; i++){
         if(fireValue[i].value === 'done'){    //todo 실행 취소
-            fireValue[i].value = "notDone";
             fireValue[i].style.backgroundImage = "url('../image/cal-fire-orange.svg')";
             let form = fireValue[i].closest('form');
             let borderDown = form.querySelector('.todo-list');
@@ -104,7 +103,7 @@ function changeValueAndSubmit(self) {
     if (self.value === 'notDone') {
         self.value = 'done';
     }
-    if (self.value === 'done') {
+    else if (self.value === 'done') {
         self.value = 'notDone';
     }
 
