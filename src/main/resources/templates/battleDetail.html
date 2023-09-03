@@ -61,7 +61,7 @@
 
   <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post" th:each="todoDate : ${todoDataList}">
     <div th:text="${todoDate.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="submit" name="value" class="fire-button" th:value="${todoDate.value}">
+    <input type="submit" name="value" class="fire-button" th:value="${todoDate.value}" onclick="changeValueAndSubmit(this);">
     <input type="hidden" name="todoDataValue" class="todoDataValue" th:value="${todoDate.todoDataValue}">
   </form>
 

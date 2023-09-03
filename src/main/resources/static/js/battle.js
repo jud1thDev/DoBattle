@@ -21,6 +21,7 @@ function changeFireColor(){
             let borderDown = form.querySelector('.todo-list');
             borderDown.style.borderBottom = "2px solid #FF5C00";
         }
+
     }
 }
 
@@ -98,6 +99,22 @@ function fireOrange(num) {
     fireIMG.value = "notDone";
     todoList.style.borderBottom = "2px solid white";
   }
+}
+function changeValueAndSubmit(self) {
+    if (self.value === 'notDone') {
+        self.value = 'done';
+    }
+    if (self.value === 'done') {
+        self.value = 'notDone';
+    }
+
+    // 부모 폼을 찾습니다.
+    const form = self.closest('form');
+
+    // 폼이 존재하면 폼을 제출합니다.
+    if (form) {
+        form.submit();
+    }
 }
 
 function saveTodoData() {
