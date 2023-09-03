@@ -3,9 +3,12 @@ let txtFieldNum = 0; // 줄줄이 투두 수정용
 let clicked = 0; // 단순 투두 몇 개 끝냄?
 let percent = 0;
 
+const form = document.querySelectorAll('form');
+const actionUrl = form[0].getAttribute('action');
+
 window.onload = function() {
     changeFireColor();
-    console.log("나와라");
+    console.log(actionUrl);
 }
 
 function changeFireColor(){
@@ -15,79 +18,68 @@ function changeFireColor(){
             fireValue[i].value = "notDone";
             fireValue[i].style.backgroundImage = "url('../image/cal-fire-orange.svg')";
             let form = fireValue[i].closest('form');
-
+            let borderDown = form.querySelector('.todo-list');
+            borderDown.style.borderBottom = "2px solid #FF5C00";
         }
     }
 }
 
-function todoClick() {
-  while (txtFieldNum === 0) {
-    let todo;   //입력한 문구 저장용
-    let battleBottom = document.getElementById("battle-bottom");
-
-    let newDiv = document.createElement("form"); // 전체 감쌀 div
-    let newText = document.createElement("input");
-    newText.type = "text";
-    newText.className = "input-text";
-    newText.placeholder = "입력";
-
-    battleBottom.appendChild(newDiv);
-    newDiv.appendChild(newText);
-
-    txtFieldNum++; // 줄줄이 방지
-
-    newText.addEventListener("keyup", function (event) {
-      if (event.key === "Enter") {
-        battleBottom.removeChild(newDiv);
-        todo = newText.value;
-
-        let todoDataInput = document.getElementById("todoDataValue");
-        todoDataInput.value = todo;
-
-        if (!todo) {
-          alert("오늘 할 일을 입력하세요.");
-          return;
-        }
-
-        let newForm = document.createElement("form"); // 밖에 감싸줄 form 태그
-        newForm.method = "POST";
-        newForm.action = "/battle/saveTodoData";
-        newForm.id = "todo-form"; // 폼에 ID 추가
-
-        let todoList = document.createElement("div"); // todo 저장
-        todoList.className = "todo-list";
-        todoList.innerText = todo;
-
-        let fireImg = document.createElement("input"); // 불 input 체크박스
-        fireImg.type = "button";
-        fireImg.value = "notDone";
-        fireImg.className = "fire-button";
-        fireImg.onclick = function () {
-          fireOrange(newForm.id);
-        };
-
-        let hiddenInput1 = document.createElement("input");
-        hiddenInput1.type = "hidden"; // 숨겨진 필드로 데이터 전달
-        hiddenInput1.name = "todoDataValue"; // 백엔드에서 사용
-        hiddenInput1.value = todo;
-
-        let hiddenInput2 = document.createElement("input");
-        hiddenInput2.type = "hidden";
-        hiddenInput2.name = "value";
-        hiddenInput2.value = "notDone";
-
-        battleBottom.appendChild(newForm);
-        newForm.appendChild(todoList);
-        newForm.appendChild(fireImg);
-        newForm.appendChild(hiddenInput1);
-        newForm.appendChild(hiddenInput2);
-
-        todoNum++;
-        txtFieldNum--;
-      }
-    });
-  }
-}
+//function todoClick() {
+//  while (txtFieldNum === 0) {
+//    let todo;   //입력한 문구 저장용
+//    let battleBottom = document.getElementById("battle-bottom");
+//
+//    let newDiv = document.createElement("div"); // 전체 감쌀 div
+//    let newText = document.createElement("input");
+//    newText.type = "text";
+//    newText.className = "input-text";
+//    newText.placeholder = "입력";
+//
+//    battleBottom.appendChild(newDiv);
+//    newDiv.appendChild(newText);
+//
+//    txtFieldNum++; // 줄줄이 방지
+//
+//    newText.addEventListener("keyup", function (event) {
+//      if (event.key === "Enter") {
+//        todo = newText.value;
+////        if (!todo) {
+////            alert("오늘 할 일을 입력하세요.");
+////            return;
+////        }
+//        battleBottom.removeChild(newDiv);   //위에 input으로 만든거 전체 삭제
+//
+//        let newDiv2 = document.createElement("form");    //밖에 감싸줄 form 태그
+//        //newDiv2.setAttribute("action", "/battle");    //html안의 js 파일에서 제어해줄것
+//        newDiv2.setAttribute("method", "post");
+//
+//        let todoList = document.createElement("div");   //todo 저장
+//        todoList.className = "todo-list";
+//        todoList.innerText = todo;
+//
+//        let fireImg = document.createElement("input"); // 불 input 체크박스
+//        fireImg.type = "submit";
+//        fireImg.value = "notDone";
+//        fireImg.className = "fire-button";
+//        fireImg.name = "value";
+//
+//        let hiddenInput1 = document.createElement("input");
+//        hiddenInput1.type = "hidden"; // 숨겨진 필드로 데이터 전달
+//        hiddenInput1.name = "todoDataValue"; // 백엔드에서 사용
+//        hiddenInput1.value = todo;
+//        hiddenInput1.className = "todoDataValue";
+//
+//        battleBottom.appendChild(newDiv2);
+//        newDiv2.appendChild(todoList);
+//        newDiv2.appendChild(fireImg);
+//        newDiv2.appendChild(hiddenInput1);
+//
+//        todoNum++;
+//        txtFieldNum--;
+//      }
+//    });
+//  }
+//}
 
 function fireOrange(num) {
   let allDiv = document.getElementById(num);

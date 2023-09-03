@@ -65,15 +65,6 @@
     <input type="hidden" name="todoDataValue" class="todoDataValue" th:value="${todoDate.todoDataValue}">
   </form>
 
-
-  <!-- 추가한 부분 -->
-<!--  <h2>Todo List</h2>-->
-<!--  <ul>-->
-<!--    <li th:each="todoData : ${todoDataList}" th:text="${todoData.todoDataValue}"></li>-->
-<!--  </ul>-->
-<!--  </form>-->
-
-
 <!--  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">-->
 <!--    <div class="todo-list">오늘의 todo리스트입니다.</div>-->
 <!--    <input type="submit" name="value" class="fire-button" value="notDone">-->
@@ -95,6 +86,9 @@
     let endDate = splitEnd[1] + '.' + splitEnd[2];
 
     document.querySelector('#date').innerText = startDate + '~' +endDate;
+
+  //폼태그에 경로 추가
+  var battleCode = /*[[${battleCode}]]*/;
   /*]]>*/
 
 
@@ -119,6 +113,62 @@
 <!--      let newText = document.querySelector('input');-->
 <!--    }-->
 
+function todoClick() {
+  while (txtFieldNum === 0) {
+    let todo;   //입력한 문구 저장용
+    let battleBottom = document.getElementById("battle-bottom");
+
+    let newDiv = document.createElement("div"); // 전체 감쌀 div
+    let newText = document.createElement("input");
+    newText.type = "text";
+    newText.className = "input-text";
+    newText.placeholder = "입력";
+
+    battleBottom.appendChild(newDiv);
+    newDiv.appendChild(newText);
+
+    txtFieldNum++; // 줄줄이 방지
+
+    newText.addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        todo = newText.value;
+//        if (!todo) {
+//            alert("오늘 할 일을 입력하세요.");
+//            return;
+//        }
+        battleBottom.removeChild(newDiv);   //위에 input으로 만든거 전체 삭제
+
+        let newDiv2 = document.createElement("form");    //밖에 감싸줄 form 태그
+        newDiv2.setAttribute("action", '/battle/' + battleCode + '/saveTodoData');    //html안의 js 파일에서 제어해줄것
+        newDiv2.setAttribute("method", "post");
+
+        let todoList = document.createElement("div");   //todo 저장
+        todoList.className = "todo-list";
+        todoList.innerText = todo;
+
+        let fireImg = document.createElement("input"); // 불 input 체크박스
+        fireImg.type = "submit";
+        fireImg.value = "notDone";
+        fireImg.className = "fire-button";
+        fireImg.name = "value";
+
+        let hiddenInput1 = document.createElement("input");
+        hiddenInput1.type = "hidden"; // 숨겨진 필드로 데이터 전달
+        hiddenInput1.name = "todoDataValue"; // 백엔드에서 사용
+        hiddenInput1.value = todo;
+        hiddenInput1.className = "todoDataValue";
+
+        battleBottom.appendChild(newDiv2);
+        newDiv2.appendChild(todoList);
+        newDiv2.appendChild(fireImg);
+        newDiv2.appendChild(hiddenInput1);
+
+        todoNum++;
+        txtFieldNum--;
+      }
+    });
+  }
+}
 </script>
 
 </body>
