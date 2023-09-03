@@ -87,6 +87,13 @@ function fireOrange(num) {
         fireIMG.value = 'notDone';
         todoList.style.borderBottom = "2px solid white";
     }
+
+function sendTodoDataToServer(battleCode, todoDataValue, value) {
+    document.getElementById('battleCode').value = battleCode;
+    document.getElementById('todoData').value = todoDataValue;
+    document.getElementById('value').value = value;
+
+    document.getElementById('todo-form').submit();
 }
 
 function sendTodoDataToServer(battleCode, todoDataValue, value) {
