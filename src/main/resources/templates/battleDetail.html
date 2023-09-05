@@ -7,8 +7,8 @@
   <link href="../css/battle.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
-<!--  <script src="../js/percentCalc.js"></script>-->
-  <!--  <script src="../js/battle.js"></script>-->
+  <script src="../js/percentCalc.js"></script>
+<!--  <script src="../js/battle.js"></script>-->
   <title>Do battle - 배틀</title>
 </head>
 <body>
@@ -43,7 +43,7 @@
     <div id="vs">vs</div>
 
     <div th:each="username : ${partnerUsernames}" id="other">
-      <p th:text="${username}">박상대</p>  <!--username-->
+      <p th:text="${username}">박상대</p>
       <div class="progress">
         <div class="first">26%</div>
         <img src="/image/progress-face-2.svg">
@@ -74,16 +74,13 @@
     </div>
   </th:block>
 
-
-  <form th:action="@{'/battle/' + ${battleCode} + '/updateTodoData'}" method="post" th:each="todoData : ${todoDataList}">
-    <th:block th:if="${todoData.userIdentify eq currentUser.identify}">
-      <input type="hidden" name="todoDataId" th:value="${todoData.id}">
-      <div th:text="${todoData.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
-      <input type="submit" name="value" class="fire-button" th:value="${todoData.value}" onclick="changeValueAndSubmit(this);">
-    </th:block>
+  <form th:action="@{'/battle/' + ${battleCode} + '/updateTodoData'}" method="post"
+        th:each="todoData : ${todoDataList}"
+        th:if="${todoData.userIdentify eq currentUser.identify}">
+    <input type="hidden" name="todoDataId" th:value="${todoData.id}">
+    <div th:text="${todoData.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
+    <input type="submit" name="value" class="fire-button" th:value="${todoData.value}" onclick="changeValueAndSubmit(this);">
   </form>
-
-  <script src="../js/battle.js"></script>
 
 </div>
 
@@ -92,13 +89,16 @@
     //날짜 월.일만 보이게 하기 위한
     let start = /*[[${startDate}]]*/;
     var splitStart = start.split('-');
-    let startDate = splitStart[1] + '.' + splitStart[2];
+    let startDate = splitStart[0].slice(-2) + '.' + splitStart[1] + '.' + splitStart[2];
 
     let end = /*[[${endDate}]]*/;
     var splitEnd = end.split('-');
-    let endDate = splitEnd[1] + '.' + splitEnd[2];
+    let endDate = splitEnd[0].slice(-2) + '.' + splitEnd[1] + '.' + splitEnd[2];
 
     document.querySelector('#date').innerText = startDate + '~' +endDate;
+
+
+    //오늘날짜것만 들고 오기 위한 날짜 저장
 
 
     //폼태그에 경로 추가
@@ -176,6 +176,8 @@ function todoClick() {
   }
 }
 </script>
+
+<script src="../js/battle.js"></script>
 
 </body>
 </html>

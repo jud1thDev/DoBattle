@@ -14,12 +14,30 @@ let percent = (clicked/todoNum)*100;
 //길이 변경용 변수들
 let me = document.querySelector('#me > .progress > .first');
 let other = document.querySelector('#other > .progress > .first');
+
+//새로고침시 바로 실행!!
 window.onload = function() {
-    changeFireColor();
-    percentCalc(me);
-    percentCalc(other);
+    changeFireColor();  //불색깔 변화
+    percentCalc(me, percent);    //내 퍼센트 길이 변경
+//    percentCalc(other); //상대방 퍼센트 길이 변경
+    deleteVs();     //상대방이름 vs 없애기
+    setOnlyTodayDate(); //오늘 날짜에 해당하는 투두데이터 불러오기
 }
 
+//실행시 오늘 날짜의 투두데이터만 불러올 수있도록
+function setOnlyTodayDate(){
+    let today = new Date();
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0);
+}
+
+//상대방에 vs없애기
+function deleteVs(){
+    let originalString = document.querySelector('#other > p');
+    let modifiedString = originalString.innerText.replace("vs", "").trim();
+    originalString.innerText = modifiedString;
+}
+
+//처음 열자마자 value값에 따라서 불 색 바뀌어있도록
 function changeFireColor(){
     let fireValue = document.querySelectorAll('.fire-button');
     for(let i=0; i<fireValue.length; i++){
@@ -33,25 +51,7 @@ function changeFireColor(){
     }
 }
 
-function fireOrange(num) {
-  let allDiv = document.getElementById(num);
-  let todoList = allDiv.querySelector(".todo-list");
-  let fireIMG = allDiv.querySelector(".fire-button");
-
-  if (fireIMG.value === "notDone") {
-    fireIMG.style.backgroundImage = "url('../image/cal-fire-orange.svg')";
-    fireIMG.value = "done";
-    todoList.style.borderBottom = "2px solid #FF5C00";
-    clicked++;
-    percent = (clicked / todoNum) * 100;
-    console.log(percent);
-  } else {
-    fireIMG.style.backgroundImage = "url('../image/todo-fire.svg')";
-    fireIMG.value = "notDone";
-    todoList.style.borderBottom = "2px solid white";
-  }
-}
-
+//value값 바꾸고 form 제출
 function changeValueAndSubmit(self) {
     if (self.value === 'notDone') {
         self.value = 'done';
@@ -78,7 +78,6 @@ function changeValueAndSubmit(self) {
         },
     });
 }
-
 
 //function saveTodoData() {
 //  var battleCode = document.getElementById("battleCode").value;
