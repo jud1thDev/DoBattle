@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BattleController {
@@ -138,6 +139,11 @@ public class BattleController {
         // TodoData를 불러오는 로직 추가
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
+
+        List<TodoData> currentUserTodoDataList = todoDataList.stream()
+                .filter(todoData -> todoData.getUserIdentify().equals(currentUser.getIdentify()))
+                .collect(Collectors.toList());
+
 
         List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);

@@ -7,7 +7,7 @@
   <link href="../css/battle.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
-  <script src="../js/percentCalc.js"></script>
+<!--  <script src="../js/percentCalc.js"></script>-->
   <!--  <script src="../js/battle.js"></script>-->
   <title>Do battle - 배틀</title>
 </head>
@@ -15,7 +15,7 @@
 
 <div id="real-top">
   <div id="battle-top">
-    <div><img src="/image/arrow.svg" onclick = "changePage('../doingBattleList')"></div>
+    <div><img src="/image/arrow.svg" onclick="changePage('../doingBattleList')"></div>
     <div id="write">배틀 상세보기</div>
     <div id="nothing"></div>
   </div>
@@ -60,19 +60,29 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <form th:action="@{'/battle/' + ${battleCode} + '/updateTodoData'}" method="post" th:each="todoDate : ${todoDataList}">
-    <input type="hidden" name="todoDataId" th:value="${todoDate.id}">
-    <div th:text="${todoDate.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
-    <input type="submit" name="value" class="fire-button" th:value="${todoDate.value}" onclick="changeValueAndSubmit(this);">
+  <th:block th:if="${currentUserTodoDataList != null and currentUserTodoDataList.size() > 0}">
+    <div id="currentUserPercentage">
+      <span th:text="${currentUser.username}"></span>
+      <span id="currentUserPercent"></span>
+    </div>
+  </th:block>
+
+  <th:block th:if="${partnerUserTodoDataList != null and partnerUserTodoDataList.size() > 0}">
+    <div id="partnerUserPercentage">
+      <span th:text="${partnerUser.username}"></span>
+      <span id="partnerUserPercent"></span>
+    </div>
+  </th:block>
+
+
+  <form th:action="@{'/battle/' + ${battleCode} + '/updateTodoData'}" method="post" th:each="todoData : ${todoDataList}">
+    <th:block th:if="${todoData.userIdentify eq currentUser.identify}">
+      <input type="hidden" name="todoDataId" th:value="${todoData.id}">
+      <div th:text="${todoData.todoDataValue}" class="todo-list">오늘의 todo리스트입니다.</div>
+      <input type="submit" name="value" class="fire-button" th:value="${todoData.value}" onclick="changeValueAndSubmit(this);">
+    </th:block>
   </form>
 
-
-  <!--  <form th:action="@{'/battle/' + ${battleCode} + '/saveTodoData'}" method="post">-->
-  <!--    <div class="todo-list">오늘의 todo리스트입니다.</div>-->
-  <!--    <input type="submit" name="value" class="fire-button" value="notDone">-->
-  <!--    <input type="hidden" name="todoDataValue" class="todoDataValue" value="내용">-->
-  <!--    <input type="hidden" name="percentage" id="">-->
-  <!--  </form>-->
   <script src="../js/battle.js"></script>
 
 </div>
@@ -107,6 +117,25 @@ originalString.innerText = modifiedString;
     var battleCode = /*[[${battleCode}]]*/;
     window.location.href = '/calender/detail?battleCode=' + battleCode;
   }
+
+// 퍼센트 계산
+var currentUserTodoDataList = /*[[${currentUserTodoDataList}]]*/;
+var partnerUserTodoDataList = /*[[${partnerUserTodoDataList}]]*/;
+
+var currentUserCompletedCount = currentUserTodoDataList.filter(function(todoData) {
+    return todoData.value === "done";
+}).length;
+var currentUserTotalCount = currentUserTodoDataList.length;
+var currentUserPercent = (currentUserCompletedCount / currentUserTotalCount * 100).toFixed(1);
+document.querySelector('#currentUserPercent').innerText = currentUserPercent + '%';
+
+var partnerUserCompletedCount = partnerUserTodoDataList.filter(function(todoData) {
+    return todoData.value === "done";
+}).length;
+var partnerUserTotalCount = partnerUserTodoDataList.length;
+var partnerUserPercent = (partnerUserCompletedCount / partnerUserTotalCount * 100).toFixed(1);
+document.querySelector('#partnerUserPercent').innerText = partnerUserPercent + '%';
+
 
 function todoClick() {
   while (txtFieldNum === 0) {
