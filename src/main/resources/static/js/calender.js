@@ -83,8 +83,8 @@ function nextCalendar(){
     buildCalendar();
 }
 
-function changeDate(date){
-    let getWithId = document.getElementById(String(date));
-    let realDay = getWithId.innerText;
-    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + realDay;
-}
+//function changeDate(date){
+//    let getWithId = document.getElementById(String(date));
+//    let realDay = getWithId.innerText;
+//    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + realDay;
+//}

@@ -173,6 +173,28 @@ public class BattleController {
         return "battleDetail";
     }
 
+    @GetMapping("/calender/detail")
+    public String showCalenderDetail(@RequestParam String battleCode,
+                                   HttpSession session,
+                                   Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
 
+        Battle battle = battleService.getBattleByCode(battleCode);
 
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("battleName", battle.getBattleName());
+        model.addAttribute("battleCategory", battle.getBattleCategory());
+        model.addAttribute("startDate", battle.getStartDate());
+        model.addAttribute("endDate", battle.getEndDate());
+        model.addAttribute("battleCode", battle.getBattleCode());
+
+        // TodoData를 불러오는 로직 추가
+        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
+        model.addAttribute("todoDataList", todoDataList);
+
+        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        model.addAttribute("partnerUsernames", partnerUsernames);
+
+        return "calender";
+    }
 }
