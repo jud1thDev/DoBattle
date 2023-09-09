@@ -21,12 +21,8 @@ public class Battle {
     private String joinUser;
     private int currentParticipants; // 현재참여자
 
-    private int completedCount = 0; // 완료된 횟수
-    private int incompletedCount = 0; // 미완료된 횟수
-
     @OneToMany(mappedBy = "battle") // battle과 tododata의 관계성
     private List<TodoData> todoDataList = new ArrayList<>();
-
 
     // Getter and Setter 메서드들
 
@@ -102,19 +98,4 @@ public class Battle {
         this.currentParticipants = currentParticipants;
     }
 
-    public int getCompletedCount() {
-        return completedCount;
-    }
-
-    public void setCompletedCount(int completedCount) {
-        this.completedCount = completedCount;
-    }
-
-    public int getIncompletedCount() {
-        return incompletedCount;
-    }
-
-    public void setIncompletedCount(int incompletedCount) {
-        this.incompletedCount = incompletedCount;
-    }
 }

@@ -1,14 +1,14 @@
 let todoNum = document.querySelectorAll('#battle-bottom > form').length;    //몇번째 todo인지 class명 저장용
 let txtFieldNum = 0; // 줄줄이 투두 수정용
 
-//퍼센트계산용 변수들
+/*//퍼센트계산용 변수들
 let clicked = 0;    //단순 투두 몇개 끝냄?
 let checkValue = document.querySelectorAll('.fire-button');
 for(let i=0; i<checkValue.length; i++){
     if(checkValue[i].value === 'done')
         clicked++;  //value값이 done인만큼 개수 저장
 }
-let percent = (clicked/todoNum)*100;
+let percent = (clicked/todoNum)*100;*/
 
 
 //길이 변경용 변수들
@@ -18,7 +18,7 @@ let other = document.querySelector('#other > .progress > .first');
 //새로고침시 바로 실행!!
 window.onload = function() {
     changeFireColor();  //불색깔 변화
-    percentCalc(me, percent);    //내 퍼센트 길이 변경
+/*    percentCalc(me, percent);    //내 퍼센트 길이 변경*/
 //    percentCalc(other); //상대방 퍼센트 길이 변경
     deleteVs();     //상대방이름 vs 없애기
     setOnlyTodayDate(); //오늘 날짜에 해당하는 투두데이터 불러오기

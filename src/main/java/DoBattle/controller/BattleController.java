@@ -1,8 +1,10 @@
 package DoBattle.controller;
 
 import DoBattle.domain.Battle;
+import DoBattle.domain.Percentage;
 import DoBattle.domain.TodoData;
 import DoBattle.domain.User;
+import DoBattle.repository.PercentageRepository;
 import DoBattle.service.BattleService;
 import DoBattle.service.TodoDataService;
 import DoBattle.service.joinBattleResult;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,6 +31,10 @@ public class BattleController {
 
     @Autowired
     private TodoDataService todoDataService;
+
+    @Autowired
+    private PercentageRepository percentageRepository;
+
 
     @GetMapping("/makeBattle")
     public String showMakeBattlePage(HttpSession session, Model model) {
@@ -122,11 +131,10 @@ public class BattleController {
     }
 
     @GetMapping("/battle/detail")
-    public String showBattleDetail(@RequestParam String battleCode,
-                                   HttpSession session,
-                                   Model model) {
+    public String showDetailPage(@RequestParam String battleCode,
+                                                HttpSession session,
+                                                Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
-
         Battle battle = battleService.getBattleByCode(battleCode);
 
         model.addAttribute("currentUser", currentUser);
@@ -136,7 +144,6 @@ public class BattleController {
         model.addAttribute("endDate", battle.getEndDate());
         model.addAttribute("battleCode", battle.getBattleCode());
 
-        // TodoData를 불러오는 로직 추가
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
 
@@ -144,25 +151,37 @@ public class BattleController {
                 .filter(todoData -> todoData.getUserIdentify().equals(currentUser.getIdentify()))
                 .collect(Collectors.toList());
 
-
         List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
+
+        // partnerUserPercentage.는 postmapping과 중복되니 별도 메서드로 뺴서.. 처리해야함(나중에
+        Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
+        Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
+
+        List<Percentage> partnerUserPercentages = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUsernames) {
+            Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
+            partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
+        }
+
+        model.addAttribute("currentUserPercentage", currentUserPercentage);
+        model.addAttribute("partnerUserPercentages", partnerUserPercentages);
+
 
         return "battleDetail";
     }
 
-
-    @PostMapping ("/battle/detail")
-    public String showBattleDetail2(@RequestParam String battleCode,
-                                    @RequestParam String todoDataValue,
-                                    @RequestParam String value,
-                                    HttpSession session,
-                                    Model model) {
+    @PostMapping("/battle/detail")
+    public String showDetailPage2(@RequestParam String battleCode,
+                                            @RequestParam String todoDataValue,
+                                            @RequestParam String value,
+                                            HttpSession session,
+                                            Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         Battle battle = battleService.getBattleByCode(battleCode);
 
-        // todoDataValue와 value도 모델에 추가
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("battleName", battle.getBattleName());
         model.addAttribute("battleCategory", battle.getBattleCategory());
@@ -170,19 +189,45 @@ public class BattleController {
         model.addAttribute("endDate", battle.getEndDate());
         model.addAttribute("battleCode", battle.getBattleCode());
 
+        model.addAttribute("todoDataValue", todoDataValue);
+        model.addAttribute("value", value);
+
+        Percentage percentage = new Percentage();
+        percentage.setBattle(battle);
+        percentage.setUserIdentify(currentUser.getIdentify());
+        percentage.setDate(LocalDate.now());
+        percentage.setAchievementRate(0.0);
+
+        percentageRepository.save(percentage);
+
+        // 각 정보들 불러오는 로직
+        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
+        model.addAttribute("todoDataList", todoDataList);
+
         List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
 
-        model.addAttribute("todoDataValue", todoDataValue);
-        model.addAttribute("value", value);
+        Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
+        Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
+
+        List<Percentage> partnerUserPercentages = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUsernames) {
+            Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
+            partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
+        }
+
+        model.addAttribute("currentUserPercentage", currentUserPercentage);
+        model.addAttribute("partnerUserPercentages", partnerUserPercentages);
 
         return "battleDetail";
     }
 
+
     @GetMapping("/calender/detail")
     public String showCalenderDetail(@RequestParam String battleCode,
-                                   HttpSession session,
-                                   Model model) {
+                                     HttpSession session,
+                                     Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         Battle battle = battleService.getBattleByCode(battleCode);

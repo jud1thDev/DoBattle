@@ -24,7 +24,13 @@ public class TodoDataService {
         return todoDataRepository.findByUserIdentify(userIdentify);
     }
 
-    public void saveTodoData(Battle battle, String todoDataValue, String value, HttpSession session) {
+    public List<TodoData> getTodoDataByBattle(Battle battle) {
+        String battleCode = battle.getBattleCode();
+        List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battleCode);
+        return todoDataList;
+    }
+
+    public TodoData saveTodoData(Battle battle, String identify, String todoDataValue, String value, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
@@ -37,17 +43,9 @@ public class TodoDataService {
             todo.setValue(value);
 
             todoDataRepository.save(todo);
-
-/*            //completedCount와 incompletedCount를 업데이트
-            updateCountsForBattle(battle);*/
-
+            return todo; // 저장된 TodoData를 반환
         }
-    }
-
-    public List<TodoData> getTodoDataByBattle(Battle battle) {
-        String battleCode = battle.getBattleCode();
-        List<TodoData> todoDataList = todoDataRepository.findByBattle_BattleCode(battleCode);
-        return todoDataList;
+        return null;
     }
 }
 
@@ -71,5 +69,4 @@ public class TodoDataService {
             battleRepository.save(battle);
         }
     }*/
-
 
