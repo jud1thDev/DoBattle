@@ -7,7 +7,7 @@
   <link href="../css/battle.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
-  <script src="../js/percentCalc.js"></script>
+<!--  <script src="../js/percentCalc.js"></script>-->
   <!--  <script src="../js/battle.js"></script>-->
   <title>Do battle - 배틀</title>
 </head>
@@ -60,20 +60,6 @@
     <img onclick="todoClick()" src="/image/todo-fire-make.svg" style="cursor:pointer;">
   </div>
 
-  <th:block th:if="${currentUserTodoDataList != null and currentUserTodoDataList.size() > 0}">
-    <div id="currentUserPercentage">
-      <span th:text="${currentUser.username}"></span>
-      <span id="currentUserPercent"></span>
-    </div>
-  </th:block>
-
-  <th:block th:if="${partnerUserTodoDataList != null and partnerUserTodoDataList.size() > 0}">
-    <div id="partnerUserPercentage">
-      <span th:text="${partnerUser.username}"></span>
-      <span id="partnerUserPercent"></span>
-    </div>
-  </th:block>
-
   <form th:action="@{'/battle/' + ${battleCode} + '/updateTodoData'}" method="post"
         th:each="todoData : ${todoDataList}"
         th:if="${todoData.userIdentify eq currentUser.identify}">
@@ -98,18 +84,19 @@
     document.querySelector('#date').innerText = startDate + '~' +endDate;
 
 
-    //오늘날짜것만 들고 오기 위한 날짜 저장
+    //퍼센트 저장
+    let currentUserName = /*[[${currentUser.username}]]*/;
+    let partnerUserName = /*[[${partnerUsernames[0]}]]*/;
+    partnerUserName = partnerUserName.replace("vs", "").trim();
 
+    let currentUserPercent = /*[[${currentUserPercentage.achievementRate}]]*/;
+    let partnerUserPercent = /*[[${partnerUserPercentages[0].achievementRate}]]*/;
+    if(currentUserPercent === null) {partnerUserPercent = 0};
+    if(partnerUserPercent === null) {partnerUserPercent = 0};
 
     //폼태그에 경로 추가
     var battleCode = /*[[${battleCode}]]*/;
 /*]]>*/
-
-
-//상대방 이름 vs 지우기
-let originalString = document.querySelector('#other > p');
-let modifiedString = originalString.innerText.replace("vs", "").trim();
-originalString.innerText = modifiedString;
 
 
 //캘린더로 이동용
@@ -117,25 +104,6 @@ originalString.innerText = modifiedString;
     var battleCode = /*[[${battleCode}]]*/;
     window.location.href = '/calender/detail?battleCode=' + battleCode;
   }
-
-// 퍼센트 계산
-var currentUserTodoDataList = /*[[${currentUserTodoDataList}]]*/;
-var partnerUserTodoDataList = /*[[${partnerUserTodoDataList}]]*/;
-
-var currentUserCompletedCount = currentUserTodoDataList.filter(function(todoData) {
-    return todoData.value === "done";
-}).length;
-var currentUserTotalCount = currentUserTodoDataList.length;
-var currentUserPercent = (currentUserCompletedCount / currentUserTotalCount * 100).toFixed(1);
-document.querySelector('#currentUserPercent').innerText = currentUserPercent + '%';
-
-var partnerUserCompletedCount = partnerUserTodoDataList.filter(function(todoData) {
-    return todoData.value === "done";
-}).length;
-var partnerUserTotalCount = partnerUserTodoDataList.length;
-var partnerUserPercent = (partnerUserCompletedCount / partnerUserTotalCount * 100).toFixed(1);
-document.querySelector('#partnerUserPercent').innerText = partnerUserPercent + '%';
-
 
 function todoClick() {
   while (txtFieldNum === 0) {
@@ -178,6 +146,7 @@ function todoClick() {
 </script>
 
 <script src="../js/battle.js"></script>
+<script src="../js/percentCalc.js"></script>
 
 </body>
 </html>
