@@ -160,10 +160,10 @@ public class BattleController {
 
         List<Percentage> partnerUserPercentages = new ArrayList<>();
 
-        for (String partnerUserIdentify : partnerUsernames) {
+        partnerUsernames.stream().forEach(partnerUsername -> {
             Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
             partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
-        }
+        });
 
         model.addAttribute("currentUserPercentage", currentUserPercentage);
         model.addAttribute("partnerUserPercentages", partnerUserPercentages);
@@ -212,10 +212,10 @@ public class BattleController {
 
         List<Percentage> partnerUserPercentages = new ArrayList<>();
 
-        for (String partnerUserIdentify : partnerUsernames) {
+        partnerUsernames.stream().forEach(partnerUsername -> {
             Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
             partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
-        }
+        });
 
         model.addAttribute("currentUserPercentage", currentUserPercentage);
         model.addAttribute("partnerUserPercentages", partnerUserPercentages);
