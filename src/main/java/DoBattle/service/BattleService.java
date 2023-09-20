@@ -99,7 +99,7 @@ public class BattleService {
         return joinedBattles;
     }
 
-    // 배틀 상대 username 찾기(doingBattleList에서 필요)
+/*    // 배틀 상대 username 찾기(doingBattleList에서 필요)
     public String getUsernameBasedOnCondition(Battle battle, String currentUserIdentify) {
         String createUser = battle.getCreateUser();
         String joinUser = battle.getJoinUser();
@@ -109,12 +109,12 @@ public class BattleService {
         } else {
             return getUsernameByIdentify(joinUser);
         }
-    }
+    }*/
 
-    private String getUsernameByIdentify(String identify) {
+    public String getUsernameByIdentify(String identify) {
         User user = userRepository.findByIdentify(identify);
         if (user != null) {
-            return "vs " + user.getUsername();
+            return /*"vs " +*/ user.getUsername();
         } else {
             return "";
         }
@@ -125,7 +125,7 @@ public class BattleService {
     } // battledetail.html에 정보를 로드하기 위해 쓰임
 
 
-    public List<String> getPartnerUsernames(List<Battle> battles, String currentUserIdentify) {
+/*    public List<String> getPartnerUsernames(List<Battle> battles, String currentUserIdentify) {
         List<String> partnerUsernames = new ArrayList<>();
 
         for (Battle battle : battles) {
@@ -134,8 +134,29 @@ public class BattleService {
         }
 
         return partnerUsernames;
+    }*/
+
+
+    public List<String> getPartnerUserIdentify(List<Battle> battles, String currentUserIdentify) {
+        List<String> partnerUserIdentifyList = new ArrayList<>();
+
+        for (Battle battle : battles) {
+            String partnerUserIdentify = getPartnerUserIdentifyBasedOnCondition(battle, currentUserIdentify);
+            partnerUserIdentifyList.add(partnerUserIdentify);
+        }
+
+        return partnerUserIdentifyList;
     }
 
+    public String getPartnerUserIdentifyBasedOnCondition(Battle battle, String currentUserIdentify) {
+        String createUser = battle.getCreateUser();
+        String joinUser = battle.getJoinUser();
 
+        if (!createUser.equals(currentUserIdentify)) {
+            return createUser;
+        } else {
+            return joinUser;
+        }
+    }
 }
 

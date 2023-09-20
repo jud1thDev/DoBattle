@@ -125,11 +125,19 @@ public class BattleController {
         List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
         model.addAttribute("joinedBattles", joinedBattles);
 
-        List<String> partnerUsernames = battleService.getPartnerUsernames(joinedBattles, currentUser.getIdentify());
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(joinedBattles, currentUser.getIdentify());
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUserIdentifyList) {
+            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
+            partnerUsernames.add(partnerUsername);
+        }
+
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         return "doingBattleList";
     }
+
 
     @GetMapping("/battle/detail")
     public String showDetailPage(@RequestParam String battleCode,
@@ -148,14 +156,21 @@ public class BattleController {
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
 
-        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUserIdentifyList) {
+            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
+            partnerUsernames.add(partnerUsername);
+        }
+
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         LocalDate currentDate = LocalDate.now();
         Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), currentDate);
         Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
 
-        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, currentUser, partnerUsernames, currentDate);
+        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, partnerUserIdentifyList, currentDate);
 
         model.addAttribute("currentUserPercentage", currentUserPercentage);
         model.addAttribute("partnerUserPercentages", partnerUserPercentages);
@@ -203,15 +218,21 @@ public class BattleController {
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
 
-        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUserIdentifyList) {
+            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
+            partnerUsernames.add(partnerUsername);
+        }
+
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         LocalDate currentDate = LocalDate.now();
         Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), currentDate);
         Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
 
-        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, currentUser, partnerUsernames, currentDate);
-
+        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, partnerUserIdentifyList, currentDate);
 
         model.addAttribute("currentUserPercentage", currentUserPercentage);
         model.addAttribute("partnerUserPercentages", partnerUserPercentages);
@@ -229,23 +250,18 @@ public class BattleController {
         return "battleDetail";
     }
 
-    private List<Percentage> getPartnerUserPercentages(Battle battle,
-                                                       User currentUser,
-                                                       List<String> partnerUsernames,
-                                                       LocalDate date) {
+
+    private List<Percentage> getPartnerUserPercentages(Battle battle, List<String> partnerUserIdentifyList, LocalDate date) {
         List<Percentage> partnerUserPercentages = new ArrayList<>();
 
-        for (String partnerUsername : partnerUsernames) {
-            Optional<User> partnerUserOptional = userRepository.findByUsername(partnerUsername);
-            if (partnerUserOptional.isPresent()) {
-                String partnerUserIdentify = partnerUserOptional.get().getIdentify();
-                Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, partnerUserIdentify, date);
-                partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
-            }
+        for (String partnerUserIdentify : partnerUserIdentifyList) {
+            Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, partnerUserIdentify, date);
+            partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
         }
 
         return partnerUserPercentages;
     }
+
 
     @GetMapping("/calender/detail")
     public String showCalenderDetail(@RequestParam String battleCode,
@@ -266,8 +282,8 @@ public class BattleController {
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
 
-        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
-        model.addAttribute("partnerUsernames", partnerUsernames);
+/*        List<String> partnerUsernames = battleService.getPartnerUsernames(Arrays.asList(battle), currentUser.getIdentify());
+        model.addAttribute("partnerUsernames", partnerUsernames);*/
 
         return "calender";
     }
