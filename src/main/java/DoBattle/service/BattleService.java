@@ -136,27 +136,5 @@ public class BattleService {
         return partnerUsernames;
     }*/
 
-
-    public List<String> getPartnerUserIdentify(List<Battle> battles, String currentUserIdentify) {
-        List<String> partnerUserIdentifyList = new ArrayList<>();
-
-        for (Battle battle : battles) {
-            String partnerUserIdentify = getPartnerUserIdentifyBasedOnCondition(battle, currentUserIdentify);
-            partnerUserIdentifyList.add(partnerUserIdentify);
-        }
-
-        return partnerUserIdentifyList;
-    }
-
-    public String getPartnerUserIdentifyBasedOnCondition(Battle battle, String currentUserIdentify) {
-        String createUser = battle.getCreateUser();
-        String joinUser = battle.getJoinUser();
-
-        if (!createUser.equals(currentUserIdentify)) {
-            return createUser;
-        } else {
-            return joinUser;
-        }
-    }
 }
 

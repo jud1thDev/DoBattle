@@ -7,6 +7,7 @@
   <link href="../css/battle.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/changePage.js"></script>
+  <script src="../js/percentCalc.js"></script>
   <!--  <script src="../js/battle.js"></script>-->
   <title>Do battle - 배틀</title>
 </head>
@@ -43,11 +44,13 @@
   <div th:each="partnerDTO, index : ${partnerDTOs}" id="other">
     <p th:text="${partnerDTO.partnerUsername}">박상대</p>
     <div class="progress">
-      <div class="first" th:text="${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent : '0'}"></div>
-      <div class="first" id="partnerPercentDefault-${index}">0%</div>
+      <div class="first" th:text="${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent + '%' : 'null'}"></div>
       <img src="/image/progress-face-2.svg">
     </div>
   </div>
+
+  <span th:if="${partnerPercent != null}" th:text="${partnerPercent}"></span>
+
 
   <div id="text">김배틀님이 34% 차이로<br>앞서가고 있어요!</div>
 </div>
