@@ -176,7 +176,6 @@ public class BattleController {
         List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
         model.addAttribute("todoDataList", todoDataList);
 
-        // 수정: partnerUserIdentifyList를 전체로 수정
         List<String> partnerUserIdentifyList = getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
         List<String> partnerUsernames = new ArrayList<>();
 
