@@ -56,4 +56,5 @@ DoBattle! : 친구들과 배틀하며 자신의 목표를 달성해가는 서비
 - 지속적으로 서로 작업 현황을 체크해줄 수 있는 상대가 필요합니다.
 - 상대와 작업 상황을 공유하며 꾸준히 밀리지 않고 일하기를 원합니다.
 
-https://www.figma.com/file/DmXYjfx9B3NWjMs2dQl0Cr/DoBattle!-User-Pesona?type=design&node-id=0%3A1&mode=design&t=UVzw8AxVs7KsaYrL-1
+['두배틀' 유저 페르소나 바로가기](https://www.figma.com/file/DmXYjfx9B3NWjMs2dQl0Cr/DoBattle!-User-Pesona?type=design&node-id=0%3A1&mode=design&t=UVzw8AxVs7KsaYrL-1
+)
