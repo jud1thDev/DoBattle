@@ -1,5 +1,7 @@
 package DoBattle.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -20,6 +22,13 @@ public class Percentage {
     private LocalDate date;
 
     private double achievementRate;
+
+    public Percentage(){}
+    public Percentage(Battle battle, String identify) {
+        this.battle = battle;
+        this.userIdentify = identify;
+        this.date = LocalDate.now();
+    }
 
     // Getter와 Setter 메서드
 
