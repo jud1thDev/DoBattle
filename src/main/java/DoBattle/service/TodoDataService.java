@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,6 +42,7 @@ public class TodoDataService {
             todo.setUserIdentify(currentUserIdentify);
             todo.setTodoDataValue(todoDataValue);
             todo.setValue(value);
+            todo.setDate(LocalDate.now());
 
             todoDataRepository.save(todo);
             return todo; // 저장된 TodoData를 반환

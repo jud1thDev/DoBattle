@@ -1,10 +1,16 @@
 package DoBattle.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Percentage {
     @Id
@@ -22,54 +28,11 @@ public class Percentage {
     private LocalDate date;
 
     private double achievementRate;
-
-    public Percentage(){}
+    
+    //생성자
     public Percentage(Battle battle, String identify) {
         this.battle = battle;
         this.userIdentify = identify;
         this.date = LocalDate.now();
-    }
-
-    // Getter와 Setter 메서드
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-    }
-
-    public String getUserIdentify() {
-        return userIdentify;
-    }
-
-    public void setUserIdentify(String userIdentify) {
-        this.userIdentify = userIdentify;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setAchievementRate(double achievementRate) {
-        this.achievementRate = achievementRate;
-    }
-
-    public double getAchievementRate() {
-        return achievementRate;
     }
 }

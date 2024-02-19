@@ -1,7 +1,13 @@
 package DoBattle.domain;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Getter
+@Setter
 @Entity
 public class TodoData {
 
@@ -22,46 +28,6 @@ public class TodoData {
     @JoinColumn(name = "battle_id")
     private Battle battle;
 
-    // getter setter
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserIdentify() {
-        return userIdentify;
-    }
-
-    public void setUserIdentify(String userIdentify) {
-        this.userIdentify = userIdentify;
-    }
-
-    public String getTodoDataValue() {
-        return todoDataValue;
-    }
-
-    public void setTodoDataValue(String todoDataValue) {
-        this.todoDataValue = todoDataValue;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
-    }
-
+    @Column
+    private LocalDate date;
 }

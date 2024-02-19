@@ -2,6 +2,7 @@ package DoBattle.controller;
 
 import DoBattle.domain.*;
 import DoBattle.repository.PercentageRepository;
+import DoBattle.repository.TodoDataRepository;
 import DoBattle.repository.UserRepository;
 import DoBattle.service.BattleService;
 import DoBattle.service.TodoDataService;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class BattleController {
@@ -35,6 +35,9 @@ public class BattleController {
 
     @Autowired
     private PercentageRepository percentageRepository;
+
+    @Autowired
+    private TodoDataRepository todoDataRepository;
 
     @GetMapping("/makeBattle")
     public String showMakeBattlePage(HttpSession session, Model model) {
@@ -173,7 +176,8 @@ public class BattleController {
         model.addAttribute("endDate", battle.getEndDate());
         model.addAttribute("battleCode", battle.getBattleCode());
 
-        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
+        List<TodoData> todoDataList = todoDataRepository.findByBattleIdAndDate(battle.getId(), LocalDate.now());
+//        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle, LocalDate.now());
         model.addAttribute("todoDataList", todoDataList);
 
         //파트너 list 찾기
