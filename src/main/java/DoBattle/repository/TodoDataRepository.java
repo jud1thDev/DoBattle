@@ -4,6 +4,7 @@ import DoBattle.domain.Battle;
 import DoBattle.domain.TodoData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,6 @@ public interface TodoDataRepository extends JpaRepository<TodoData, Long> {
     List<TodoData> findByBattleIdAndDate(Long battleId, LocalDate date);
     //오늘날짜에만 해당하는 모든 투두 들고오기
 
-    @Query(value = "SELECT * FROM todo_data WHERE battle_id = : battleId AND date = :date AND user_identify = :identify", nativeQuery = true)
-    List<TodoData> findByBattleIdAndDateAndUserIdentify(Battle battle, String identify, LocalDate date);
+    @Query(value = "SELECT * FROM todo_data WHERE battle_id = :battleId AND date = :date AND user_identify = :identify", nativeQuery = true)
+    List<TodoData> findByBattleIdAndDateAndUserIdentify(Long battleId, String identify, LocalDate date);
 }

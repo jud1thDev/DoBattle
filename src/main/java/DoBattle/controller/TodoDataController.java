@@ -50,8 +50,8 @@ public class TodoDataController {
         // Percentage 엔티티를 조회하여 업데이트 또는 생성
         Optional<Percentage> existingPercentage = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
 
-        //오늘 날짜에만 해당하는 todo 들고오기
-        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleIdAndDateAndUserIdentify(battle, currentUser.getIdentify(), LocalDate.now()), "done");
+        //오늘 날짜에만 해당하는 퍼센트
+        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleIdAndDateAndUserIdentify(battle.getId(), currentUser.getIdentify(), LocalDate.now()), "done");
 
         Percentage percentage;
         if (existingPercentage.isPresent()) {
@@ -95,7 +95,7 @@ public class TodoDataController {
 
         Optional<Percentage> existingPercentage = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, todoData.getUserIdentify(), LocalDate.now());
 
-        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleAndUserIdentify(battle, todoData.getUserIdentify()), "done");
+        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleIdAndDateAndUserIdentify(battle.getId(), todoData.getUserIdentify(), LocalDate.now()), "done");
 
         Percentage percentage;
         if (existingPercentage.isPresent()) {
