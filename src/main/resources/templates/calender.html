@@ -55,12 +55,12 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    let start = /*[[${startDate}]]*/;
-    let end = /*[[${endDate}]]*/;
+    let start = /*[[${battle.startDate}]]*/;
+    let end = /*[[${battle.endDate}]]*/;
      /*]]>*/
 
 function goToBattlePage(element) {
-    var battleCode = /*[[${battleCode}]]*/;
+    var battleCode = /*[[${battle.battleCode}]]*/;
     window.location.href = '/battle/detail?battleCode=' + battleCode;
   }
 
