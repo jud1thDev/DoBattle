@@ -21,9 +21,9 @@ public class TodoDataService {
     @Autowired
     private BattleRepository battleRepository;
 
-    public List<TodoData> getTodoDataForUser(String userIdentify) {
-        return todoDataRepository.findByUserIdentify(userIdentify);
-    }
+//    public List<TodoData> getTodoDataForUser(String userIdentify) {
+//        return todoDataRepository.findByUserIdentify(userIdentify);
+//    }
 
     public List<TodoData> getTodoDataByBattle(Battle battle) {
         String battleCode = battle.getBattleCode();
@@ -49,7 +49,22 @@ public class TodoDataService {
         }
         return null;
     }
+
+    public double calculateAchievementRate(List<TodoData> todoDataList, String valueDone) {
+        int completedCount = 0;
+        int totalTodoCount = 0;
+
+        for (TodoData todoData : todoDataList) {
+            if (valueDone.equals(todoData.getValue())) {
+                completedCount++;
+            }
+            totalTodoCount++;
+        }
+
+        return (totalTodoCount > 0) ? (completedCount * 100.0) / totalTodoCount : 0.0;
+    }
 }
+
 
 /*    public void updateCountsForBattle(Battle battle) {
         if (battle != null) {

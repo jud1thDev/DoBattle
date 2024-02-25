@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TodoDataRepository extends JpaRepository<TodoData, Long> {
 
-    List<TodoData> findByUserIdentify(String userIdentify);
+//    List<TodoData> findByUserIdentify(String userIdentify);
     List<TodoData> findByBattle_BattleCode(String battleCode);
     // 만약 findByBattleCode 로 한다면 'code'라는 필드(파라미터)명이 존재해야해서 오류가 떴음.
 
@@ -19,5 +19,8 @@ public interface TodoDataRepository extends JpaRepository<TodoData, Long> {
 
     @Query(value = "SELECT * FROM todo_data WHERE battle_id = :battleId AND date = :date", nativeQuery = true)
     List<TodoData> findByBattleIdAndDate(Long battleId, LocalDate date);
-    //오늘날짜에 해당하는 투두만 들고오기
+    //오늘날짜에만 해당하는 모든 투두 들고오기
+
+    @Query(value = "SELECT * FROM todo_data WHERE battle_id = : battleId AND date = :date AND user_identify = :identify", nativeQuery = true)
+    List<TodoData> findByBattleIdAndDateAndUserIdentify(Battle battle, String identify, LocalDate date);
 }

@@ -50,7 +50,8 @@ public class TodoDataController {
         // Percentage 엔티티를 조회하여 업데이트 또는 생성
         Optional<Percentage> existingPercentage = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), LocalDate.now());
 
-        double achievementRate = calculateAchievementRate(todoDataRepository.findByBattleAndUserIdentify(battle, currentUser.getIdentify()), "done");
+        //오늘 날짜에만 해당하는 todo 들고오기
+        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleIdAndDateAndUserIdentify(battle, currentUser.getIdentify(), LocalDate.now()), "done");
 
         Percentage percentage;
         if (existingPercentage.isPresent()) {
@@ -71,20 +72,6 @@ public class TodoDataController {
         String redirectUrl = "/battle/detail?battleCode=" + battleCode;
 
         return new RedirectView(redirectUrl);
-    }
-
-    private double calculateAchievementRate(List<TodoData> todoDataList, String valueDone) {
-        int completedCount = 0;
-        int totalTodoCount = 0;
-
-        for (TodoData todoData : todoDataList) {
-            if (valueDone.equals(todoData.getValue())) {
-                completedCount++;
-            }
-            totalTodoCount++;
-        }
-
-        return (totalTodoCount > 0) ? (completedCount * 100.0) / totalTodoCount : 0.0;
     }
 
     @PostMapping("/{battleCode}/updateTodoData")
@@ -108,7 +95,7 @@ public class TodoDataController {
 
         Optional<Percentage> existingPercentage = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, todoData.getUserIdentify(), LocalDate.now());
 
-        double achievementRate = calculateAchievementRate(todoDataRepository.findByBattleAndUserIdentify(battle, todoData.getUserIdentify()), "done");
+        double achievementRate = todoDataService.calculateAchievementRate(todoDataRepository.findByBattleAndUserIdentify(battle, todoData.getUserIdentify()), "done");
 
         Percentage percentage;
         if (existingPercentage.isPresent()) {

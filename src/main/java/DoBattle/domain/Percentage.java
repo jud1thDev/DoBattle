@@ -28,11 +28,4 @@ public class Percentage {
     private LocalDate date;
 
     private double achievementRate;
-    
-    //생성자
-    public Percentage(Battle battle, String identify) {
-        this.battle = battle;
-        this.userIdentify = identify;
-        this.date = LocalDate.now();
-    }
 }
