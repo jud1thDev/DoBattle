@@ -23,7 +23,7 @@ function whoWin(){
     if(currentUserPercent > partnerUserPercent){
         whoWinText.innerText = currentUserName + '님이 ' + percentDifference + '% 차이로\n 이기고 있어요!';
     }
-    if(currentUserPercent === partnerUserPercent){
+    else if(currentUserPercent === partnerUserPercent){
         if(currentUserPercent %1 != 0){    //소숫점일 경우 소수점뒤 한자리만 보이도록
            currentUserPercent = currentUserPercent.toFixed(1);
         }
