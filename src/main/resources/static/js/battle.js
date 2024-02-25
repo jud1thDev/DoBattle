@@ -11,7 +11,6 @@ window.onload = function() {
     console.log(partnerUserPercent);
     percentCalc(me, currentUserPercent);    //내 퍼센트 길이 변경
     percentCalc(other, partnerUserPercent); //상대방 퍼센트 길이 변경
-//    setOnlyTodayDate(); //오늘 날짜에 해당하는 투두데이터 불러오기
     whoWin();
 }
 
