@@ -192,13 +192,14 @@ public class BattleController {
 
         //본인 퍼센트 찾기
         LocalDate currentDate = LocalDate.now();
+
         Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), currentDate);
         Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
+        model.addAttribute("currentUserPercentage", currentUserPercentage);
 
         //상대방 퍼센트 찾기
         List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, partnerUserIdentifyList, currentDate);
 
-        model.addAttribute("currentUserPercentage", currentUserPercentage);
         model.addAttribute("partnerUserPercentages", partnerUserPercentages);
 
         List<PartnerDTO> partnerDTOs = new ArrayList<>();
@@ -219,55 +220,6 @@ public class BattleController {
         return "battleDetail";
     }
 
-    //투두 추가
-//    @PostMapping("/battle/detail")
-//    public String showDetailPage2(@RequestParam String battleCode,
-//                                  @RequestParam String todoDataValue,
-//                                  @RequestParam String value,
-//                                  HttpSession session,
-//                                  Model model) {
-//        User currentUser = (User) session.getAttribute("currentUser");
-//        Battle battle = battleService.getBattleByCode(battleCode);
-//
-//        Percentage percentage = new Percentage(battle, currentUser.getIdentify());
-//        percentage.setAchievementRate(0.0); // 0.0 기본값
-//        percentageRepository.save(percentage);
-//
-//        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle);
-//        model.addAttribute("todoDataList", todoDataList);
-//
-//        List<String> partnerUserIdentifyList = getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
-//        List<String> partnerUsernames = new ArrayList<>();
-//
-//        for (String partnerUserIdentify : partnerUserIdentifyList) {
-//            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
-//            partnerUsernames.add(partnerUsername);
-//        }
-//
-//        model.addAttribute("partnerUsernames", partnerUsernames);
-//
-//        LocalDate currentDate = LocalDate.now();
-//        Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), currentDate);
-//        Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
-//
-//        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, partnerUserIdentifyList, currentDate);
-//
-//        model.addAttribute("currentUserPercentage", currentUserPercentage);
-//        model.addAttribute("partnerUserPercentages", partnerUserPercentages);
-//
-//        List<PartnerDTO> partnerDTOs = new ArrayList<>();
-//        for (int i = 0; i < partnerUsernames.size(); i++) {
-//            String partnerUsername = partnerUsernames.get(i);
-//            Double partnerPercent = (i < partnerUserPercentages.size()) ? partnerUserPercentages.get(i).getAchievementRate() : null;
-//            PartnerDTO partnerDTO = new PartnerDTO(partnerUsername, partnerPercent);
-//            partnerDTOs.add(partnerDTO);
-//        }
-//
-//        model.addAttribute("partnerDTOs", partnerDTOs);
-//
-//        return "battleDetail";
-//    }
-
     private List<Percentage> getPartnerUserPercentages(Battle battle, List<String> partnerUserIdentifyList, LocalDate date) {
         List<Percentage> partnerUserPercentages = new ArrayList<>();
 
@@ -276,7 +228,6 @@ public class BattleController {
             partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
 
         }
-
         return partnerUserPercentages;
     }
 

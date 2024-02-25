@@ -31,22 +31,28 @@
     <div><img src="/image/calendar.svg" onclick="goToBattlePage(this)"></div>
   </div>
 
-  <div id="me">
-    <div class="progress">
-      <div class="first" th:text="${currentUserPercentage != null ? currentUserPercentage.achievementRate : '0'}"></div>
-      <img src="/image/progress-face-1.svg">
+  <div id="battle-progress">
+    <div id="me">
+      <div class="progress">
+        <div class="first" th:text="${currentUserPercentage != null ? currentUserPercentage.achievementRate : '0%'}"></div>
+        <img src="/image/progress-face-1.svg">
+      </div>
+      <p id="currentUserUsername" th:text="${currentUser.username}">김배틀</p>
     </div>
-    <p id="currentUserUsername" th:text="${currentUser.username}">김배틀</p>
-  </div>
 
-  <div id="vs">vs</div>
+    <div id="vs">vs</div>
 
-  <div th:each="partnerDTO, index : ${partnerDTOs}" id="other">
-    <p th:text="${partnerDTO.partnerUsername}">박상대</p>
-    <div class="progress">
-      <div class="first" th:text="${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent + '%' : 'null'}"></div>
-      <!--이거 파트너유저의 퍼센트가 없을시 null로 반환하라는 건데 나중에는 0% 반환하는 걸로 고치면 될듯 지금은 오류잡기 쉬울려고.. 걍 냅둠-->
-      <img src="/image/progress-face-2.svg">
+    <div th:each="partnerDTO, index : ${partnerDTOs}" id="other">
+      <p th:text="${partnerDTO.partnerUsername}">박상대</p>
+      <div class="progress">
+        <div class="first" th:text="${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent + '%' : '0%'}"></div>
+        <!--이거 파트너유저의 퍼센트가 없을시 null로 반환하라는 건데 나중에는 0% 반환하는 걸로 고치면 될듯 지금은 오류잡기 쉬울려고.. 걍 냅둠-->
+        <script th:inline="javascript">
+          var partnerUserPercent = /*[[${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent : '0'}]]*/;
+          var partnerUserName = /*[[${partnerDTO.partnerUsername}]]*/;
+        </script>
+        <img src="/image/progress-face-2.svg">
+      </div>
     </div>
   </div>
 
@@ -88,14 +94,10 @@
 
     //폼태그에 경로 추가
     var battleCode = /*[[${battleCode}]]*/;
+
+    var currentUserName = /*[[${currentUser.username}]]*/;
+    var currentUserPercent = /*[[${currentUserPercentage != null ? currentUserPercentage.achievementRate : '0'}]]*/;
 /*]]>*/
-
-
-//상대방 이름 vs 지우기
-let originalString = document.querySelector('#other > p');
-let modifiedString = originalString.innerText.replace("vs", "").trim();
-originalString.innerText = modifiedString;
-
 
 //캘린더로 이동용
   function goToBattlePage(element) {

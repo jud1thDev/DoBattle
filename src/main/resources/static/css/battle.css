@@ -50,6 +50,7 @@ body{
 #date{
     font-size: 18px;
     z-index: 2;
+    color: gray;
 }
 
 #name{
