@@ -34,7 +34,7 @@
   <div id="battle-progress">
     <div id="me">
       <div class="progress">
-        <div class="first" th:text="${currentUserPercentage != null ? currentUserPercentage.achievementRate : '0%'}"></div>
+        <div class="first" th:text="${currentUserPercentage}"></div>
         <img src="/image/progress-face-1.svg">
       </div>
       <p id="currentUserUsername" th:text="${currentUser.username}">김배틀</p>
@@ -96,7 +96,7 @@
     var battleCode = /*[[${battleCode}]]*/;
 
     var currentUserName = /*[[${currentUser.username}]]*/;
-    var currentUserPercent = /*[[${currentUserPercentage != null ? currentUserPercentage.achievementRate : '0'}]]*/;
+    var currentUserPercent = /*[[${currentUserPercentage}]]*/;
 /*]]>*/
 
 //캘린더로 이동용

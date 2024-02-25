@@ -1,18 +1,19 @@
 package DoBattle.service;
 
 import DoBattle.domain.Battle;
+import DoBattle.domain.Percentage;
 import DoBattle.domain.TodoData;
 import DoBattle.domain.User;
 import DoBattle.repository.BattleRepository;
+import DoBattle.repository.PercentageRepository;
 import DoBattle.repository.TodoDataRepository;
 import DoBattle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class BattleService {
@@ -28,6 +29,10 @@ public class BattleService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PercentageRepository percentageRepository;
+
     private Battle battleCode;
 
     public Battle createBattle(String battleName,
@@ -125,16 +130,44 @@ public class BattleService {
     } // battledetail.html에 정보를 로드하기 위해 쓰임
 
 
-/*    public List<String> getPartnerUsernames(List<Battle> battles, String currentUserIdentify) {
-        List<String> partnerUsernames = new ArrayList<>();
+    public List<String> getPartnerUserIdentify(List<Battle> battles, String currentUserIdentify) {
+        List<String> partnerUserIdentifyList = new ArrayList<>();
 
         for (Battle battle : battles) {
-            String partnerUsername = getUsernameBasedOnCondition(battle, currentUserIdentify);
+            String partnerUserIdentify = getPartnerUserIdentifyBasedOnCondition(battle, currentUserIdentify);
+            partnerUserIdentifyList.add(partnerUserIdentify);
+        }
+
+        return partnerUserIdentifyList;
+    }
+
+    public List<String> getPartnerUserName(List<Battle> battles, String currentUserIdentify) {
+        List<String> partnerUserIdentifyList = new ArrayList<>();
+
+        for (Battle battle : battles) {
+            String partnerUserIdentify = getPartnerUserIdentifyBasedOnCondition(battle, currentUserIdentify);
+            partnerUserIdentifyList.add(partnerUserIdentify);
+        }
+
+        List<String> partnerUsernames = new ArrayList<>();
+
+        for (String partnerUserIdentify : partnerUserIdentifyList) {
+            String partnerUsername = getUsernameByIdentify(partnerUserIdentify);
             partnerUsernames.add(partnerUsername);
         }
 
         return partnerUsernames;
-    }*/
+    }
 
+    public String getPartnerUserIdentifyBasedOnCondition(Battle battle, String currentUserIdentify) {
+        String createUser = battle.getCreateUser();
+        String joinUser = battle.getJoinUser();
+
+        if (!createUser.equals(currentUserIdentify)) {
+            return createUser;
+        } else {
+            return joinUser;
+        }
+    }
 }
 

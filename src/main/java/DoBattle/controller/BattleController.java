@@ -5,6 +5,7 @@ import DoBattle.repository.PercentageRepository;
 import DoBattle.repository.TodoDataRepository;
 import DoBattle.repository.UserRepository;
 import DoBattle.service.BattleService;
+import DoBattle.service.PercentageService;
 import DoBattle.service.TodoDataService;
 import DoBattle.service.joinBattleResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class BattleController {
@@ -38,6 +37,9 @@ public class BattleController {
 
     @Autowired
     private TodoDataRepository todoDataRepository;
+
+    @Autowired
+    private PercentageService percentageService;
 
     @GetMapping("/makeBattle")
     public String showMakeBattlePage(HttpSession session, Model model) {
@@ -127,39 +129,11 @@ public class BattleController {
         List<Battle> joinedBattles = battleService.getJoinedBattles(currentUser.getIdentify());
         model.addAttribute("joinedBattles", joinedBattles);
 
-        List<String> partnerUserIdentifyList = getPartnerUserIdentify(joinedBattles, currentUser.getIdentify());
-        List<String> partnerUsernames = new ArrayList<>();
-
-        for (String partnerUserIdentify : partnerUserIdentifyList) {
-            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
-            partnerUsernames.add(partnerUsername);
-        }
+        List<String> partnerUsernames = battleService.getPartnerUserName(joinedBattles, currentUser.getIdentify());
 
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         return "doingBattleList";
-    }
-
-    private List<String> getPartnerUserIdentify(List<Battle> battles, String currentUserIdentify) {
-        List<String> partnerUserIdentifyList = new ArrayList<>();
-
-        for (Battle battle : battles) {
-            String partnerUserIdentify = getPartnerUserIdentifyBasedOnCondition(battle, currentUserIdentify);
-            partnerUserIdentifyList.add(partnerUserIdentify);
-        }
-
-        return partnerUserIdentifyList;
-    }
-
-    public String getPartnerUserIdentifyBasedOnCondition(Battle battle, String currentUserIdentify) {
-        String createUser = battle.getCreateUser();
-        String joinUser = battle.getJoinUser();
-
-        if (!createUser.equals(currentUserIdentify)) {
-            return createUser;
-        } else {
-            return joinUser;
-        }
     }
 
     @GetMapping("/battle/detail")
@@ -177,58 +151,23 @@ public class BattleController {
         model.addAttribute("battleCode", battle.getBattleCode());
 
         List<TodoData> todoDataList = todoDataRepository.findByBattleIdAndDate(battle.getId(), LocalDate.now());
-//        List<TodoData> todoDataList = todoDataService.getTodoDataByBattle(battle, LocalDate.now());
         model.addAttribute("todoDataList", todoDataList);
 
         //파트너 list 찾기
-        List<String> partnerUserIdentifyList = getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
-        List<String> partnerUsernames = new ArrayList<>();
-
-        for (String partnerUserIdentify : partnerUserIdentifyList) {
-            String partnerUsername = battleService.getUsernameByIdentify(partnerUserIdentify);
-            partnerUsernames.add(partnerUsername);
-        }
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+        List<String> partnerUsernames = battleService.getPartnerUserName(Arrays.asList(battle), currentUser.getIdentify());
         model.addAttribute("partnerUsernames", partnerUsernames);
 
         //본인 퍼센트 찾기
         LocalDate currentDate = LocalDate.now();
-
-        Optional<Percentage> currentUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, currentUser.getIdentify(), currentDate);
-        Percentage currentUserPercentage = currentUserPercentageOptional.orElse(null);
+        double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), currentDate);
         model.addAttribute("currentUserPercentage", currentUserPercentage);
 
         //상대방 퍼센트 찾기
-        List<Percentage> partnerUserPercentages = getPartnerUserPercentages(battle, partnerUserIdentifyList, currentDate);
-
-        model.addAttribute("partnerUserPercentages", partnerUserPercentages);
-
-        List<PartnerDTO> partnerDTOs = new ArrayList<>();
-        for (int i = 0; i < partnerUsernames.size(); i++) {
-            String partnerUsername = partnerUsernames.get(i);
-            Double partnerPercent = (i < partnerUserPercentages.size()) ? partnerUserPercentages.get(i).getAchievementRate() : null;
-            PartnerDTO partnerDTO = new PartnerDTO(partnerUsername, partnerPercent);
-            partnerDTOs.add(partnerDTO);
-        }
-
+        List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, currentDate);
         model.addAttribute("partnerDTOs", partnerDTOs);
 
-//        System.out.println("partnerUserIdentifyList: " + partnerUserIdentifyList);
-//        System.out.println("currentUserPercent: " + currentUserPercentage);
-//        System.out.println("partnerUserPercent: " + partnerUserPercentages);
-//        System.out.println("partnerUsername: " + partnerUsernames);
-
         return "battleDetail";
-    }
-
-    private List<Percentage> getPartnerUserPercentages(Battle battle, List<String> partnerUserIdentifyList, LocalDate date) {
-        List<Percentage> partnerUserPercentages = new ArrayList<>();
-
-        for (String partnerUserIdentify : partnerUserIdentifyList) {
-            Optional<Percentage> partnerUserPercentageOptional = percentageRepository.findByBattleAndUserIdentifyAndDate(battle, partnerUserIdentify, date);
-            partnerUserPercentageOptional.ifPresent(partnerUserPercentages::add);
-
-        }
-        return partnerUserPercentages;
     }
 
     @GetMapping("/calender/detail")
