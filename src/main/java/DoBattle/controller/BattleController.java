@@ -143,11 +143,7 @@ public class BattleController {
         Battle battle = battleService.getBattleByCode(battleCode);
 
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("battleName", battle.getBattleName());
-        model.addAttribute("battleCategory", battle.getBattleCategory());
-        model.addAttribute("startDate", battle.getStartDate());
-        model.addAttribute("endDate", battle.getEndDate());
-        model.addAttribute("battleCode", battle.getBattleCode());
+        model.addAttribute("battle", battle);
 
         List<TodoData> todoDataList = todoDataRepository.findByBattleIdAndDate(battle.getId(), LocalDate.now());
         model.addAttribute("todoDataList", todoDataList);
