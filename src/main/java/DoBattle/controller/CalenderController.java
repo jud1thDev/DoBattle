@@ -78,8 +78,42 @@ public class CalenderController {
 
     @GetMapping("/calender/fire/{battleCode}")
     @ResponseBody
-    public Map<LocalDate, String> showFire(@PathVariable String battleCode, HttpSession session, Model model){
-        Map<LocalDate, String> responseData = new HashMap<>(); //반환해줄 값 (json으로 보내주기 위해)
+    public Map<String, String> showFire(@PathVariable String battleCode, HttpSession session, Model model){
+        Map<String, String> responseData = new HashMap<>(); //반환해줄 값 (json으로 보내주기 위해)
+
+        User currentUser = (User) session.getAttribute("currentUser");
+        Battle battle = battleService.getBattleByCode(battleCode);
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+
+        //시작-종료까지의 퍼센트 승리자 찾기
+        LocalDate startDate = battle.getStartDate();
+        LocalDate now = LocalDate.now();
+        for (LocalDate date = startDate; date.isBefore(now.plusDays(1)); date = date.plusDays(1)) {
+            //본인 퍼센트
+            double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), date);
+            //상대방 퍼센트 Max 찾기
+            List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, date);
+
+            double maxPartnerUserPercentage = partnerDTOs.get(0).getPartnerPercent();
+            String maxPartnerName = partnerDTOs.get(0).getPartnerUsername();
+            for(int i=1; i < partnerDTOs.size(); i++){
+                if(partnerDTOs.get(i).getPartnerPercent() >= maxPartnerUserPercentage) {
+                    maxPartnerUserPercentage = partnerDTOs.get(i).getPartnerPercent();
+                    maxPartnerName = partnerDTOs.get(i).getPartnerUsername();
+                }
+            }
+
+            //계산
+            String sendDate = date.toString();
+            System.out.println(sendDate);
+            if (currentUserPercentage > maxPartnerUserPercentage) {
+                responseData.put(sendDate, "현재사용자");
+            } else if(currentUserPercentage < maxPartnerUserPercentage){
+                responseData.put(sendDate, "파트너");
+            } else{
+                responseData.put(sendDate, "동점");
+            }
+        }
 
         return responseData;
     }
