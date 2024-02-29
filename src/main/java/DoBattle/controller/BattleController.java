@@ -21,18 +21,8 @@ import java.util.*;
 
 @Controller
 public class BattleController {
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private BattleService battleService;
-
-    @Autowired
-    private TodoDataService todoDataService;
-
-    @Autowired
-    private PercentageRepository percentageRepository;
 
     @Autowired
     private TodoDataRepository todoDataRepository;
@@ -163,54 +153,5 @@ public class BattleController {
         model.addAttribute("partnerDTOs", partnerDTOs);
 
         return "battleDetail";
-    }
-
-    @GetMapping("/calender/detail")
-    public String showCalenderDetail(@RequestParam String battleCode,
-                                     HttpSession session,
-                                     Model model) {
-        User currentUser = (User) session.getAttribute("currentUser");
-
-        Battle battle = battleService.getBattleByCode(battleCode);
-
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("battle", battle);
-
-        //본인 퍼센트 찾기
-        double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), LocalDate.now());
-        model.addAttribute("currentUserPercentage", currentUserPercentage);
-
-        //상대방 퍼센트 찾기
-        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
-        List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, LocalDate.now());
-        model.addAttribute("partnerDTOs", partnerDTOs);
-
-        return "calender";
-    }
-
-    @GetMapping("/calender/dateclick/{battleCode}/{clickDate}")
-    @ResponseBody
-    public Map<String, Object> clickCalenderDate(@PathVariable String battleCode, @PathVariable String clickDate,
-                                    HttpSession session,
-                                    Model model){
-        Map<String, Object> responseData = new HashMap<>(); //반환해줄 값 (json으로 보내주기 위해)
-
-        User currentUser = (User) session.getAttribute("currentUser");
-        model.addAttribute("currentUser", currentUser);
-        Battle battle = battleService.getBattleByCode(battleCode);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(clickDate, formatter);    //프론트에서 클릭한 날짜
-
-        //본인 퍼센트 찾기
-        double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), date);
-        responseData.put("currentUserPercentage", currentUserPercentage);
-
-        //상대방 퍼센트 찾기
-        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
-        List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, date);
-        responseData.put("partnerDTOs", partnerDTOs);
-
-        return responseData;
     }
 }
