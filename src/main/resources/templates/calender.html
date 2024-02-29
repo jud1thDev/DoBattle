@@ -7,6 +7,7 @@
     <link href="../css/calender.css" rel="stylesheet">
     <script src="../js/calender.js"></script>
     <script src="../js/changePage.js"></script>
+    <script src="../js/calenderClicked.js"></script>
     <title>Do battle - 배틀달력</title>
 </head>
 <body>
@@ -48,36 +49,30 @@
     <div><span id = "click-date"></span>의 배틀 결과</div>
     <div>
         <div><img src="/image/progress-face-1.svg"></div>
-        <div><b>김배틀</b> 님이 34% 차이로 <br>승리했어요!</div>
+        <div id = "whoWin"><b>김배틀</b> <span>님이 34% 차이로 <br>승리했어요!</span></div>
     </div>
+</div>
+
+<!--파트너dto 가져오기위한 가짜div-->
+<div th:each="partnerDTO, index : ${partnerDTOs}">
+    <script th:inline="javascript">
+        var partnerUserPercent = /*[[${partnerDTO.partnerPercent != null ? partnerDTO.partnerPercent : '0'}]]*/;
+        var partnerUserName = /*[[${partnerDTO.partnerUsername}]]*/;
+    </script>
 </div>
 </body>
 
 <script th:inline="javascript">
-    /*<![CDATA[*/
+/*<![CDATA[*/
     let start = /*[[${battle.startDate}]]*/;
     let end = /*[[${battle.endDate}]]*/;
-     /*]]>*/
+    let battleCode = /*[[${battle.battleCode}]]*/;
+    let currentUserName = /*[[${currentUser.username}]]*/;
+    let currentUserPercent = /*[[${currentUserPercentage}]]*/;
+/*]]>*/
 
 function goToBattlePage(element) {
-    var battleCode = /*[[${battle.battleCode}]]*/;
     window.location.href = '/battle/detail?battleCode=' + battleCode;
   }
-
-function changeDate(date){
-    let getWithId = document.getElementById(String(date));
-    let realDay = getWithId.innerText;
-    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + realDay;
-
-    //클릭한 요일 풀로 저장용
-    let clickedDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), date);
-    let inside = document.querySelectorAll('.battle-result > div')[1];
-    if(today <= clickedDate){
-        inside.style.display = 'none';
-    }
-    else{
-        inside.style.display = 'flex';
-    }
-}
 </script>
 </html>

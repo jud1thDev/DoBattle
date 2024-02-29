@@ -1,6 +1,7 @@
 window.onload = function () {
     buildCalendar();
     document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + today.getDate();
+    whoWin();
 }
 
 let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
@@ -83,8 +84,31 @@ function nextCalendar(){
     buildCalendar();
 }
 
-//function changeDate(date){
-//    let getWithId = document.getElementById(String(date));
-//    let realDay = getWithId.innerText;
-//    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + realDay;
-//}
+function whoWin(){
+    let percentDifference = Math.abs(currentUserPercent - partnerUserPercent);
+    console.log(currentUserPercent);
+    console.log(partnerUserPercent);
+    let whoWinPercent = document.querySelector("#whoWin > span");
+    let whoWinMember = document.querySelector("#whoWin > b");
+
+        if(percentDifference %1 !== 0){    //소숫점일 경우 소수점뒤 한자리만 보이도록
+           percentDifference = percentDifference.toFixed(1);
+        }
+
+        //승리자 가리기
+        if(currentUserPercent > partnerUserPercent){
+            whoWinMember.innerText = currentUserName;
+            whoWinPercent.innerText = '님이 ' + percentDifference + '% 차이로\n 이기고 있어요!';
+        }
+        else if(currentUserPercent === partnerUserPercent){
+            if(currentUserPercent %1 != 0){    //소숫점일 경우 소수점뒤 한자리만 보이도록
+               currentUserPercent = currentUserPercent.toFixed(1);
+            }
+            whoWinMember.innerText = "";
+            whoWinPercent.innerText = currentUserName + '님과 ' + partnerUserName + '님이 ' + currentUserPercent+  '%로\n 동점입니다!';
+        }
+        else{
+            whoWinMember.innerText = partnerUserPercent
+            whoWinPercent.innerText = partnerUserName + '님이 ' + percentDifference + '% 차이로\n 앞서가고 있어요!';
+        }
+}
