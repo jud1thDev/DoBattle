@@ -11,13 +11,12 @@ import DoBattle.service.joinBattleResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -181,6 +180,41 @@ public class BattleController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("battle", battle);
 
+        //본인 퍼센트 찾기
+        double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), LocalDate.now());
+        model.addAttribute("currentUserPercentage", currentUserPercentage);
+
+        //상대방 퍼센트 찾기
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+        List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, LocalDate.now());
+        model.addAttribute("partnerDTOs", partnerDTOs);
+
         return "calender";
+    }
+
+    @GetMapping("/calender/dateclick/{battleCode}/{clickDate}")
+    @ResponseBody
+    public Map<String, Object> clickCalenderDate(@PathVariable String battleCode, @PathVariable String clickDate,
+                                    HttpSession session,
+                                    Model model){
+        Map<String, Object> responseData = new HashMap<>(); //반환해줄 값 (json으로 보내주기 위해)
+
+        User currentUser = (User) session.getAttribute("currentUser");
+        model.addAttribute("currentUser", currentUser);
+        Battle battle = battleService.getBattleByCode(battleCode);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(clickDate, formatter);    //프론트에서 클릭한 날짜
+
+        //본인 퍼센트 찾기
+        double currentUserPercentage = percentageService.findCurrentUserPercent(battle, currentUser.getIdentify(), date);
+        responseData.put("currentUserPercentage", currentUserPercentage);
+
+        //상대방 퍼센트 찾기
+        List<String> partnerUserIdentifyList = battleService.getPartnerUserIdentify(Arrays.asList(battle), currentUser.getIdentify());
+        List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, date);
+        responseData.put("partnerDTOs", partnerDTOs);
+
+        return responseData;
     }
 }

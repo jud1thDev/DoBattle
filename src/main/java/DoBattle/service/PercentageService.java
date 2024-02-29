@@ -41,7 +41,7 @@ public class PercentageService {
         List<PartnerDTO> partnerDTOs = new ArrayList<>();
         for (int i = 0; i < partnerUsernames.size(); i++) {
             String partnerUsername = partnerUsernames.get(i);
-            Double partnerPercent = (i < partnerUserPercentages.size()) ? partnerUserPercentages.get(i).getAchievementRate() : 0;
+            Double partnerPercent = (i < partnerUserPercentages.size()) ? partnerUserPercentages.get(i).getAchievementRate() : 0.0;
             PartnerDTO partnerDTO = new PartnerDTO(partnerUsername, partnerPercent);
             partnerDTOs.add(partnerDTO);
         }
