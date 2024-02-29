@@ -1,9 +1,3 @@
-window.onload = function () {
-    buildCalendar();
-    document.getElementById("click-date").innerText = (nowMonth.getMonth() + 1) + '/' + today.getDate();
-    whoWin();
-}
-
 let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
 let today = new Date();     // 오늘 날 저장용
 let changeDay;  //밑에 결과창용
@@ -62,13 +56,11 @@ function buildCalendar(){
         //밑에 날짜 뜨기 위한 id값 저장
         nowColumn.id = nowDay.getDate();
         newDivFire.id = nowDay.getDate();
-        //클릭시 밑에 날짜뜨는 (오늘 이전의 날만)
-        if(today >= nowDay){
-            newDivFire.onclick = function() {
-                changeDay = newDivFire.id;
-                changeDate(changeDay);
-            };
-        }
+        //클릭시 밑에 날짜뜨는
+        newDivFire.onclick = function() {
+            changeDay = newDivFire.id;
+            changeDate(changeDay);
+        };
 
         // 다음 날짜로 이동
         nowDay.setDate(nowDay.getDate() + 1);
@@ -84,29 +76,4 @@ function prevCalendar(){
 function nextCalendar(){
     nowMonth.setMonth(nowMonth.getMonth()+1);
     buildCalendar();
-}
-
-function whoWin(){
-    let percentDifference = Math.abs(currentUserPercent - partnerUserPercent);
-    console.log(currentUserPercent);
-    console.log(partnerUserPercent);
-    let whoWinPercent = document.querySelector("#whoWin");
-
-        if(percentDifference %1 !== 0){    //소숫점일 경우 소수점뒤 한자리만 보이도록
-           percentDifference = percentDifference.toFixed(1);
-        }
-
-        //승리자 가리기
-        if(currentUserPercent > partnerUserPercent){
-            whoWinPercent.innerText = currentUserName + '님이 ' + percentDifference + '% 차이로\n 이기고 있어요!';
-        }
-        else if(currentUserPercent === partnerUserPercent){
-            if(currentUserPercent %1 != 0){    //소숫점일 경우 소수점뒤 한자리만 보이도록
-               currentUserPercent = currentUserPercent.toFixed(1);
-            }
-            whoWinPercent.innerText = currentUserName + '님과 ' + partnerUserName + '님이 ' + currentUserPercent+  '%로\n 동점입니다!';
-        }
-        else{
-            whoWinPercent.innerText = partnerUserName + '님이 ' + percentDifference + '% 차이로\n 앞서가고 있어요!';
-        }
 }
