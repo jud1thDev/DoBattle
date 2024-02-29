@@ -62,7 +62,6 @@ function buildCalendar(){
         //서버에서 불러오기 위한 LocalDate형 날짜
         let serverDate = nowDay.getFullYear() + "-" + (nowDay.getMonth() + 1).toString().padStart(2, '0') + "-" + nowDay.getDate().toString().padStart(2, '0');
         let startDate = new Date(start);
-        console.log(serverDate);
 
         if (nowDay.getDay() === 0) { // 일요일인 경우 새로운 행을 추가
             nowRow = Calendar_tbody.insertRow();
@@ -76,15 +75,12 @@ function buildCalendar(){
         if(nowDay <= today && nowDay >= startDate){
             if(serverData[serverDate] == "동점"){
                 imgElement.src = "/image/cal-fire-white.svg";
-                console.log("동점");
             }
             else if(serverData[serverDate] == "파트너"){
                 imgElement.src = "/image/cal-fire-grey.svg";
-                console.log("파트너 승");
             }
             else{
                 imgElement.src = "/image/cal-fire-orange.svg";
-                console.log("본인 승");
             }
 
             newDivFire.onclick = function() {

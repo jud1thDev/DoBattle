@@ -36,7 +36,7 @@ public class BattleController {
 
         if (currentUser != null) {
             model.addAttribute("currentUser", currentUser);
-            return "makeBattle";
+            return "makeBattle/makeBattle";
         }
 
         return "redirect:/login";
@@ -59,7 +59,7 @@ public class BattleController {
 
             model.addAttribute("battleCode", createdBattle.getBattleCode());
 
-            return "makeBattleSuccess";
+            return "makeBattle/makeBattleSuccess";
         }
 
         return "redirect:/login";
@@ -71,7 +71,7 @@ public class BattleController {
 
         if (currentUser != null) {
             model.addAttribute("currentUser", currentUser);
-            return "joinBattle";
+            return "joinBattle/joinBattle";
         }
 
         return "redirect:/login";
@@ -90,7 +90,7 @@ public class BattleController {
             joinBattleResult result = battleService.joinBattle(battleCode, identify);
 
             if (result == joinBattleResult.SUCCESS) {
-                return "joinBattleSuccess";
+                return "joinBattle/joinBattleSuccess";
             } else if (result == joinBattleResult.ALREADY_JOINED) {
                 model.addAttribute("joinBattleError", "이미 참여 중인 배틀입니다.");
             } else if (result == joinBattleResult.BATTLE_FULL) {
@@ -99,7 +99,7 @@ public class BattleController {
                 model.addAttribute("joinBattleError", "잘못된 배틀 코드입니다. 다시 입력하세요.");
             }
 
-            return "joinBattle";
+            return "joinBattle/joinBattle";
         }
 
         return "redirect:/login";
@@ -122,7 +122,7 @@ public class BattleController {
 
         model.addAttribute("partnerUsernames", partnerUsernames);
 
-        return "doingBattleList";
+        return "battle/doingBattleList";
     }
 
     @GetMapping("/battle/detail")
@@ -152,6 +152,6 @@ public class BattleController {
         List<PartnerDTO> partnerDTOs = percentageService.getPartnerUserPercentages(battle, currentUser.getIdentify(), partnerUserIdentifyList, currentDate);
         model.addAttribute("partnerDTOs", partnerDTOs);
 
-        return "battleDetail";
+        return "battle/battleDetail";
     }
 }
